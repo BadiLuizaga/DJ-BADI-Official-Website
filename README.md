@@ -1,74 +1,48 @@
 
-# DJ BADI — Official Website
+<div align="center">
 
-Official website of DJ BADI, an independent electronic music artist. A cinematic digital experience focused on music, visual identity, events and international bookings.
+# ⚡ DJ BADI — Technology Stack
 
-## 🚀 Technology Stack
+**Plataforma web oficial para DJ BADI**
 
-### Frontend
-- Next.js — React framework.
-- React — Component-based user interface.
-- TypeScript — Static typing and maintainable code.
-- Tailwind CSS — Utility-first styling.
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
-### Animations & Visual Effects
-- Motion — UI animations and transitions.
-- GSAP — Advanced animations and scroll interactions.
-- Three.js — 3D graphics and immersive visual experiences.
-
-### Icons & UI
-- Lucide React — Modern icon library.
-- Custom UI Components — Reusable interface elements.
-
-### Backend & Database
-- Supabase — Backend as a Service (BaaS).
-- PostgreSQL — Relational database.
-- Supabase Storage — Media and file storage.
-
-### Multimedia
-- Cloudinary — Image and video optimization.
-- SoundCloud — Music mixes and embedded audio players.
-- YouTube — Music videos and live performances.
-
-### Email & Communication
-- Resend — Transactional emails and booking notifications.
-- WhatsApp — Direct booking communication.
-
-### SEO & Analytics
-- Next.js Metadata API — SEO optimization.
-- Google Analytics 4 — Website traffic and user analytics.
-- Google Search Console — Search performance monitoring.
-
-### Deployment & Infrastructure
-- Vercel — Hosting and continuous deployment.
-- GitHub — Source code management and version control.
-- Git — Version control system.
-
-## 🎧 Main Features
-
-- Cinematic landing page.
-- Artist profile and biography.
-- Music player and DJ sets.
-- Events and performances calendar.
-- Audiovisual gallery.
-- Booking and contact system.
-- Responsive design.
-- Interactive animations and visual effects.
-- SEO optimization.
-
-## 🎨 Art Direction
-
-- Dark aesthetic.
-- Neon orange visual identity.
-- Abstract and Wave-inspired graphics.
-- Experimental typography.
-- Cinematic transitions.
-- Immersive electronic music experience.
-
-## 📌 Project Status
-
-Currently under development.
+</div>
 
 ---
 
-**DJ BADI © 2026 — Feel the Energy. Live the Sound.**
+## 🧰 Pila Tecnológica
+
+| Frontend | Animaciones y efectos | Backend |
+|:---:|:---:|:---:|
+| Next.js | Motion | Supabase |
+| React | GSAP | PostgreSQL |
+| TypeScript | Three.js | Supabase Storage |
+| Tailwind CSS | Lucide React | Resend |
+
+## 🎨 Diseño y Multimedia
+
+| Diseño e interfaz | Audio y video | Optimización multimedia |
+|:---:|:---:|:---:|
+| Tailwind CSS | SoundCloud | Cloudinary |
+| Motion | YouTube | Next.js Image |
+| GSAP | Audio Player | Image Optimization |
+
+## 🌐 Infraestructura y Servicios
+
+| Control de versiones | Despliegue | Analítica |
+|:---:|:---:|:---:|
+| Git | Vercel | Google Analytics 4 |
+| GitHub | CI/CD | Google Search Console |
+
+## 🚀 Tecnologías principales
+
+![Next.js](https://img.shields.io/badge/Next.js-Framework-000000?style=flat-square&logo=next.js)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3FCF8E?style=flat-square&logo=supabase)
+![GSAP](https://img.shields.io/badge/GSAP-Animations-88CE02?style=flat-square&logo=greensock)
+![Three.js](https://img.shields.io/badge/Three.js-3D-000000?style=flat-square&logo=threedotjs)
+![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=flat-square&logo=vercel)
+
