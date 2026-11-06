@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# DJ BADI — Official Website
 
-First, run the development server:
+Official website of DJ BADI, an independent electronic music artist. A cinematic digital experience focused on music, visual identity, events and international bookings.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Technology Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Frontend
+- Next.js — React framework.
+- React — Component-based user interface.
+- TypeScript — Static typing and maintainable code.
+- Tailwind CSS — Utility-first styling.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Animations & Visual Effects
+- Motion — UI animations and transitions.
+- GSAP — Advanced animations and scroll interactions.
+- Three.js — 3D graphics and immersive visual experiences.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Icons & UI
+- Lucide React — Modern icon library.
+- Custom UI Components — Reusable interface elements.
 
-## Learn More
+### Backend & Database
+- Supabase — Backend as a Service (BaaS).
+- PostgreSQL — Relational database.
+- Supabase Storage — Media and file storage.
 
-To learn more about Next.js, take a look at the following resources:
+### Multimedia
+- Cloudinary — Image and video optimization.
+- SoundCloud — Music mixes and embedded audio players.
+- YouTube — Music videos and live performances.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Email & Communication
+- Resend — Transactional emails and booking notifications.
+- WhatsApp — Direct booking communication.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### SEO & Analytics
+- Next.js Metadata API — SEO optimization.
+- Google Analytics 4 — Website traffic and user analytics.
+- Google Search Console — Search performance monitoring.
 
-## Deploy on Vercel
+### Deployment & Infrastructure
+- Vercel — Hosting and continuous deployment.
+- GitHub — Source code management and version control.
+- Git — Version control system.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎧 Main Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Cinematic landing page.
+- Artist profile and biography.
+- Music player and DJ sets.
+- Events and performances calendar.
+- Audiovisual gallery.
+- Booking and contact system.
+- Responsive design.
+- Interactive animations and visual effects.
+- SEO optimization.
+
+## 🎨 Art Direction
+
+- Dark aesthetic.
+- Neon orange visual identity.
+- Abstract and Wave-inspired graphics.
+- Experimental typography.
+- Cinematic transitions.
+- Immersive electronic music experience.
+
+## 📌 Project Status
+
+Currently under development.
+
+---
+
+**DJ BADI © 2026 — Feel the Energy. Live the Sound.**
