@@ -1,7 +1,7 @@
 
 <div align="center">
 
-# ⚡ DJ BADI — Technology Stack
+# ⚡ DJ BADI
 
 **Plataforma web oficial para DJ BADI**
 
