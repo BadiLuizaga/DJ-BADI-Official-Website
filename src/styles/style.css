@@ -131,12 +131,6 @@ img {
   letter-spacing: -1px;
 }
 
-.brand-logo {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-}
-
 .orange {
   color: var(--orange);
 }
@@ -385,24 +379,6 @@ img {
   }
 }
 
-.visual-label,
-.visual-caption {
-  position: absolute;
-  color: #c0b8b0;
-  font-size: 9px;
-  letter-spacing: 2px;
-}
-
-.visual-label {
-  top: 10%;
-  right: 10%;
-}
-
-.visual-caption {
-  bottom: 8%;
-  left: 0;
-}
-
 /* =========================================
    HERO FOOTER
 ========================================= */
@@ -417,26 +393,10 @@ img {
    ABOUT
 ========================================= */
 
-.intro {
-  position: relative;
-  border-top: 1px solid var(--border);
-  padding: 100px 0;
-  display: grid;
-  grid-template-columns: 1fr 3fr auto;
-  gap: 35px;
-  align-items: center;
-  background: linear-gradient(
-    90deg,
-    rgba(5, 5, 5, 0.48),
-    rgba(5, 5, 5, 0.2)
-  );
-}
-
 .section-number {
   color: var(--orange);
 }
 
-.intro h2,
 .section-heading h2 {
   font-size: clamp(35px, 6vw, 76px);
   line-height: 0.95;
@@ -444,34 +404,9 @@ img {
   margin: 0;
 }
 
-.intro h2 span,
 .section-heading h2 span,
 .contact-section h2 span {
   color: var(--orange);
-}
-
-.intro p {
-  max-width: 430px;
-  color: #c1bbb5;
-  font-size: 14px;
-  line-height: 1.8;
-  margin-top: 25px;
-}
-
-.round-link {
-  width: 60px;
-  height: 60px;
-  border: 1px solid #777;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  transition: 0.3s;
-}
-
-.round-link:hover {
-  background: var(--orange);
-  border-color: var(--orange);
-  box-shadow: 0 0 25px rgba(255, 90, 31, 0.3);
 }
 
 /* =========================================
@@ -495,11 +430,6 @@ img {
   margin: 0 auto;
 }
 
-.trajectory-heading {
-  max-width: 760px;
-  margin-bottom: 55px;
-}
-
 .section-kicker,
 .trajectory-card-top,
 .featured-label {
@@ -518,19 +448,6 @@ img {
   background: var(--orange);
 }
 
-.trajectory-heading h2 {
-  margin: 24px 0;
-  font-size: clamp(48px, 8vw, 100px);
-  line-height: 0.88;
-  letter-spacing: -5px;
-  font-weight: 900;
-}
-
-.trajectory-heading h2 span {
-  color: var(--orange);
-}
-
-.trajectory-heading p,
 .trajectory-card p {
   color: rgba(255, 255, 255, 0.78);
   line-height: 1.8;
@@ -667,45 +584,8 @@ img {
   font-size: 11px;
 }
 
-.featured-event {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 25px;
-  margin-top: 20px;
-  padding: 32px;
-  color: white;
-  background:
-    linear-gradient(
-      100deg,
-      rgba(20, 8, 3, 0.95),
-      rgba(20, 8, 3, 0.58)
-    );
-  border: 1px solid rgba(255, 90, 31, 0.55);
-  transition: box-shadow 0.3s;
-}
-
-.featured-event:hover {
-  box-shadow: 0 0 30px rgba(255, 90, 31, 0.12);
-}
-
 .featured-label {
   font-size: 10px;
-}
-
-.featured-event h3 {
-  margin: 16px 0 5px;
-  font-size: clamp(25px, 4vw, 38px);
-}
-
-.featured-event p {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 13px;
-}
-
-.featured-event > svg {
-  flex-shrink: 0;
-  color: var(--orange);
 }
 
 /* =========================================
@@ -1042,27 +922,12 @@ img {
     letter-spacing: 0.5px;
   }
 
-  .intro {
-    grid-template-columns: 1fr auto;
-    padding: 75px 0;
-  }
-
-  .intro > div {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .intro h2,
   .section-heading h2 {
     letter-spacing: -2px;
   }
 
   .trajectory-section {
     padding: 75px 0;
-  }
-
-  .trajectory-heading h2 {
-    letter-spacing: -3px;
   }
 
   .trajectory-grid {
@@ -1085,10 +950,6 @@ img {
   .trajectory-card {
     padding: 25px;
     min-height: auto;
-  }
-
-  .featured-event {
-    padding: 22px;
   }
 
   .music-section,
@@ -1192,10 +1053,6 @@ img {
     display: none;
   }
 
-  .trajectory-heading h2 {
-    font-size: 48px;
-  }
-
   .trajectory-card h3 {
     font-size: 24px;
   }
@@ -1215,14 +1072,6 @@ img {
 
   .trajectory-stats span {
     font-size: 7px;
-  }
-
-  .featured-event {
-    padding: 18px;
-  }
-
-  .featured-event h3 {
-    font-size: 23px;
   }
 
   .events-grid {
@@ -1484,7 +1333,6 @@ img {
   );
 }
 
-.about-photo-tag,
 .about-photo-caption {
   position: absolute;
   z-index: 2;
@@ -1493,11 +1341,6 @@ img {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 2px;
-}
-
-.about-photo-tag {
-  top: 22px;
-  color: var(--orange);
 }
 
 .about-photo-caption {
@@ -1882,22 +1725,6 @@ img {
   line-height: 1.6;
 }
 
-.trajectory-clubs {
-  background-image: url("/trayectoria-clubes.jpg");
-}
-
-.trajectory-restobars {
-  background-image: url("/trayectoria-restobares.jpg");
-}
-
-.trajectory-events {
-  background-image: url("/trayectoria-eventos.jpg");
-}
-
-.trajectory-collaborations {
-  background-image: url("/trayectoria-colaboraciones.png");
-}
-
 .venue-list {
   margin-top: 20px;
   gap: 8px;
@@ -2030,17 +1857,6 @@ img {
     transform: none;
   }
 
-  .featured-event-new {
-  position: relative;
-  min-height: 145px;
-  margin-top: 22px;
-  padding: 25px 35px;
-  overflow: hidden;
-  border-radius: 8px;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.35)),
-    url("E:\badi-web\public/SaborModa.jpg") center 45% / cover no-repeat;
-}
 }
 
 @media (max-width: 480px) {

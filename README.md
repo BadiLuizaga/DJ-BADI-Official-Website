@@ -16,20 +16,20 @@
 
 ## 🧰 Pila Tecnológica
 
-| Frontend | Animaciones y efectos | Backend |
+| Frontend | UI | Servicios |
 |:---:|:---:|:---:|
-| Next.js | Motion | Supabase |
-| React | GSAP | PostgreSQL |
-| TypeScript | Three.js | Supabase Storage |
-| Tailwind CSS | Lucide React | Resend |
+| Next.js | Lucide React | Vercel |
+| React | - | - |
+| TypeScript | - | - |
+| Tailwind CSS | - | - |
 
 ## 🎨 Diseño y Multimedia
 
 | Diseño e interfaz | Audio y video | Optimización multimedia |
 |:---:|:---:|:---:|
-| Tailwind CSS | SoundCloud | Cloudinary |
-| Motion | YouTube | Next.js Image |
-| GSAP | Audio Player | Image Optimization |
+| Tailwind CSS | SoundCloud | Next.js Image |
+| Lucide React | YouTube | - |
+| - | - | Image Optimization |
 
 ## 🌐 Infraestructura y Servicios
 
@@ -41,8 +41,4 @@
 ## 🚀 Tecnologías principales
 
 ![Next.js](https://img.shields.io/badge/Next.js-Framework-000000?style=flat-square&logo=next.js)
-![Supabase](https://img.shields.io/badge/Supabase-Backend-3FCF8E?style=flat-square&logo=supabase)
-![GSAP](https://img.shields.io/badge/GSAP-Animations-88CE02?style=flat-square&logo=greensock)
-![Three.js](https://img.shields.io/badge/Three.js-3D-000000?style=flat-square&logo=threedotjs)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployment-000000?style=flat-square&logo=vercel)
-
