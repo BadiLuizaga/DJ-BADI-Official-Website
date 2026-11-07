@@ -1,26 +1,2064 @@
+
 @import "tailwindcss";
 
+/* =========================================
+   DJ BADI — DESIGN SYSTEM
+========================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #080808;
+  --foreground: #f5f1eb;
+  --orange: #ff5a1f;
+  --orange-light: #ff824d;
+  --muted: #aaa29c;
+  --border: rgba(255, 255, 255, 0.13);
+  --panel: rgba(12, 12, 12, 0.72);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-padding-top: 100px;
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.12),
+      rgba(0, 0, 0, 0.04)
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.48)
+    ),
+    url("/badi-background-clean.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--orange);
+  color: white;
+}
+
+/* Evita cursores decorativos en elementos no editables */
+*:not(input):not(textarea):not([contenteditable="true"]) {
+  caret-color: transparent;
+}
+
+/* =========================================
+   MAIN LAYOUT
+========================================= */
+
+.site {
+  position: relative;
+  isolation: isolate;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 5.5%;
+  overflow: hidden;
+}
+
+.site::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(255, 75, 20, 0.08),
+      transparent 35%
+    );
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.navbar {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 5, 5, 0.48);
+  backdrop-filter: blur(15px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 3vw, 38px);
+}
+
+.nav-links a,
+.booking,
+.hero-top,
+.hero-footer,
+.eyebrow,
+.section-number,
+.discover,
+.footer {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.nav-links a {
+  color: #c5c0bb;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 0;
+  height: 2px;
+  background: var(--orange);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.booking {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--orange);
+  padding: 13px 18px;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.booking:hover {
+  background: var(--orange);
+  box-shadow: 0 0 25px rgba(255, 90, 31, 0.3);
+}
+
+.mobile-menu {
+  display: none;
+  background: transparent;
+  color: white;
+  border: 0;
+  cursor: pointer;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  min-height: 690px;
+  position: relative;
+  padding-top: 30px;
+}
+
+.hero-top,
+.hero-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+}
+
+.hero-top span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--orange);
+}
+
+.hero-content {
+  min-height: 530px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: clamp(100px, 17vw, 245px);
+  line-height: 0.73;
+  letter-spacing: -0.105em;
+  font-weight: 950;
+  margin: 0;
+}
+
+.hero h1 span {
+  color: var(--orange);
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  margin-top: 48px;
+}
+
+.hero-bottom p {
+  color: #d0cbc5;
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.discover {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-bottom: 1px solid var(--orange);
+  padding-bottom: 12px;
+  transition: 0.3s;
+}
+
+.discover:hover {
+  color: var(--orange);
+}
+
+/* =========================================
+   ANIMATED ENERGY VISUALIZER
+========================================= */
+
+.visual {
+  position: absolute;
+  right: 3%;
+  width: min(39vw, 450px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.visual-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.ring-one {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(255, 90, 31, 0.75);
+  animation: orbit-one 18s linear infinite;
+}
+
+.ring-two {
+  width: 78%;
+  height: 78%;
+  border: 2px solid transparent;
+  border-top-color: var(--orange);
+  border-right-color: var(--orange);
+  border-bottom-color: rgba(255, 90, 31, 0.2);
+  box-shadow:
+    0 0 12px rgba(255, 90, 31, 0.2),
+    inset 0 0 8px rgba(255, 90, 31, 0.08);
+  animation: orbit-two 7s linear infinite;
+}
+
+.ring-three {
+  width: 55%;
+  height: 55%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-left: 2px solid var(--orange);
+  border-bottom-color: rgba(255, 90, 31, 0.5);
+  animation: orbit-three 10s linear infinite;
+}
+
+.visual-center {
+  position: relative;
+  z-index: 2;
+  width: 25%;
+  height: 25%;
+  display: grid;
+  place-items: center;
+  color: var(--orange);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 90, 31, 0.3),
+    transparent 70%
+  );
+  animation: energy-pulse 2s ease-in-out infinite;
+}
+
+@keyframes orbit-one {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-two {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes orbit-three {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes energy-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px var(--orange));
+  }
+
+  50% {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 25px var(--orange));
+  }
+}
+
+.visual-label,
+.visual-caption {
+  position: absolute;
+  color: #c0b8b0;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.visual-label {
+  top: 10%;
+  right: 10%;
+}
+
+.visual-caption {
+  bottom: 8%;
+  left: 0;
+}
+
+/* =========================================
+   HERO FOOTER
+========================================= */
+
+.hero-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  color: #aaa;
+}
+
+/* =========================================
+   ABOUT
+========================================= */
+
+.intro {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding: 100px 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr auto;
+  gap: 35px;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 5, 0.48),
+    rgba(5, 5, 5, 0.2)
+  );
+}
+
+.section-number {
+  color: var(--orange);
+}
+
+.intro h2,
+.section-heading h2 {
+  font-size: clamp(35px, 6vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -4px;
+  margin: 0;
+}
+
+.intro h2 span,
+.section-heading h2 span,
+.contact-section h2 span {
+  color: var(--orange);
+}
+
+.intro p {
+  max-width: 430px;
+  color: #c1bbb5;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 25px;
+}
+
+.round-link {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #777;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: 0.3s;
+}
+
+.round-link:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  box-shadow: 0 0 25px rgba(255, 90, 31, 0.3);
+}
+
+/* =========================================
+   TRAJECTORY
+========================================= */
+
+.trajectory-section {
+  position: relative;
+  padding: 110px 3%;
+  border-top: 1px solid var(--border);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.35),
+      rgba(5, 5, 5, 0.58)
+    );
+}
+
+.trajectory-container {
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.trajectory-heading {
+  max-width: 760px;
+  margin-bottom: 55px;
+}
+
+.section-kicker,
+.trajectory-card-top,
+.featured-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.kicker-line {
+  width: 35px;
+  height: 1px;
+  background: var(--orange);
+}
+
+.trajectory-heading h2 {
+  margin: 24px 0;
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: 0.88;
+  letter-spacing: -5px;
+  font-weight: 900;
+}
+
+.trajectory-heading h2 span {
+  color: var(--orange);
+}
+
+.trajectory-heading p,
+.trajectory-card p {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.trajectory-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  padding: 30px 0;
+  margin-bottom: 40px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.trajectory-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trajectory-stats strong {
+  font-size: 38px;
+  color: var(--orange);
+}
+
+.trajectory-stats span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.trajectory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.trajectory-card {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  min-height: 300px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(8, 8, 8, 0.91),
+      rgba(12, 12, 12, 0.76)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 5px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.24);
+  transition:
+    transform 0.35s,
+    border-color 0.35s,
+    box-shadow 0.35s;
+}
+
+.trajectory-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 90, 31, 0.8);
+  box-shadow: 0 15px 40px rgba(255, 75, 20, 0.09);
+}
+
+.trajectory-card-top {
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+.trajectory-card-top svg {
+  color: var(--orange);
+}
+
+.trajectory-card h3 {
+  margin: 30px 0 8px;
+  font-size: 29px;
+  letter-spacing: -1px;
+}
+
+.venue-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 25px;
+}
+
+.venue-list span {
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.19);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+}
+
+.venue-list span:hover {
+  border-color: var(--orange);
+  background: rgba(255, 90, 31, 0.12);
+}
+
+.collaboration-list {
+  margin-top: 24px;
+}
+
+.collaboration-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 17px 0;
+  color: white;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.3s;
+}
+
+.collaboration-item:hover {
+  color: var(--orange);
+}
+
+.collaboration-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.collaboration-item strong {
+  font-size: 17px;
+}
+
+.collaboration-item span {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+}
+
+.featured-event {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-top: 20px;
+  padding: 32px;
+  color: white;
+  background:
+    linear-gradient(
+      100deg,
+      rgba(20, 8, 3, 0.95),
+      rgba(20, 8, 3, 0.58)
+    );
+  border: 1px solid rgba(255, 90, 31, 0.55);
+  transition: box-shadow 0.3s;
+}
+
+.featured-event:hover {
+  box-shadow: 0 0 30px rgba(255, 90, 31, 0.12);
+}
+
+.featured-label {
+  font-size: 10px;
+}
+
+.featured-event h3 {
+  margin: 16px 0 5px;
+  font-size: clamp(25px, 4vw, 38px);
+}
+
+.featured-event p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+}
+
+.featured-event > svg {
+  flex-shrink: 0;
+  color: var(--orange);
+}
+
+/* =========================================
+   MUSIC
+========================================= */
+
+.music-section {
+  padding: 100px 0 110px;
+  border-top: 1px solid var(--border);
+  background: rgba(5, 5, 5, 0.42);
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+.section-heading > p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.music-card {
+  min-height: 210px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  padding: 25px;
+  transition: border 0.3s;
+}
+
+.music-card:hover {
+  border-color: var(--orange);
+}
+
+.music-art {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+  background:
+    radial-gradient(
+      circle at 60% 35%,
+      #ff7a37,
+      #541d10 40%,
+      #101010 75%
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  color: white;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.music-info h3 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.music-info p {
+  color: #aaa;
+  font-size: 13px;
+}
+
+.music-index {
+  margin-left: auto;
+  color: #777;
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.music-platforms {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.music-platform {
+  min-height: 125px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 22px;
+  background: rgba(12, 12, 12, 0.78);
+  border: 1px solid var(--border);
+  transition: 0.3s;
+}
+
+.music-platform:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange);
+  background: rgba(255, 90, 31, 0.08);
+}
+
+.platform-icon {
+  color: var(--orange);
+}
+
+.platform-info {
+  flex: 1;
+}
+
+.platform-info > span {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.platform-info p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   EVENTS
+========================================= */
+
+.events-section {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+  background: rgba(5, 5, 5, 0.42);
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.event-item {
+  min-height: 210px;
+  position: relative;
+  padding: 25px;
+  background: rgba(12, 12, 12, 0.78);
+  border: 1px solid var(--border);
+  transition: 0.3s;
+}
+
+.event-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--orange);
+}
+
+.event-item > span {
+  color: var(--orange);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.event-item h3 {
+  margin-top: 45px;
+  font-size: 19px;
+}
+
+.event-item p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   CONTACT / BOOKINGS
+========================================= */
+
+.contact-section {
+  padding: 110px 0;
+  border-top: 1px solid var(--border);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.8),
+      rgba(5, 5, 5, 0.48)
+    );
+}
+
+.contact-section h2 {
+  font-size: clamp(55px, 10vw, 130px);
+  line-height: 0.9;
+  letter-spacing: -7px;
+  margin: 35px 0;
+}
+
+.contact-section > p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.contact-section > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--orange);
+  padding: 17px 25px;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.contact-section > a:hover {
+  background: var(--orange-light);
+  box-shadow: 0 0 30px rgba(255, 90, 31, 0.3);
+  transform: translateY(-3px);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+  border-top: 1px solid var(--border);
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: #aaa;
+  font-size: 9px;
+}
+
+.footer a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: white;
+}
+
+/* =========================================
+   RESPONSIVE — TABLETS
+========================================= */
+
+@media (max-width: 1000px) {
+  .site {
+    padding: 0 4%;
+  }
+
+  .nav-links {
+    gap: 17px;
+  }
+
+  .nav-links a {
+    font-size: 9px;
+  }
+
+  .hero h1 {
+    font-size: clamp(100px, 15vw, 170px);
+  }
+
+  .trajectory-card {
+    padding: 25px;
+  }
+
+  .events-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+  body {
+    background-attachment: scroll;
+    background-position: center top;
+  }
+
+  .site {
+    padding: 0 5%;
+  }
+
+  .navbar {
+    height: 75px;
+  }
+
+  .nav-links,
+  .booking {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .hero {
+    min-height: 620px;
+  }
+
+  .hero-top span:last-child {
+    font-size: 8px;
+  }
+
+  .hero-content {
+    min-height: 500px;
+    align-items: flex-start;
+    padding-top: 115px;
+  }
+
+  .hero h1 {
+    font-size: clamp(90px, 22vw, 160px);
+  }
+
+  .visual {
+    width: 65vw;
+    right: -20%;
+    top: 140px;
+    opacity: 0.35;
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 35px;
+  }
+
+  .hero-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+
+  .intro {
+    grid-template-columns: 1fr auto;
+    padding: 75px 0;
+  }
+
+  .intro > div {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .intro h2,
+  .section-heading h2 {
+    letter-spacing: -2px;
+  }
+
+  .trajectory-section {
+    padding: 75px 0;
+  }
+
+  .trajectory-heading h2 {
+    letter-spacing: -3px;
+  }
+
+  .trajectory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trajectory-stats {
+    gap: 12px;
+  }
+
+  .trajectory-stats strong {
+    font-size: 28px;
+  }
+
+  .trajectory-stats span {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .trajectory-card {
+    padding: 25px;
+    min-height: auto;
+  }
+
+  .featured-event {
+    padding: 22px;
+  }
+
+  .music-section,
+  .events-section {
+    padding: 75px 0;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .music-card {
+    gap: 18px;
+    padding: 15px;
+  }
+
+  .music-art {
+    width: 105px;
+    height: 105px;
+    font-size: 20px;
+  }
+
+  .music-info h3 {
+    font-size: 20px;
+  }
+
+  .music-info p {
+    font-size: 11px;
+  }
+
+  .music-index {
+    display: none;
+  }
+
+  .music-platforms {
+    grid-template-columns: 1fr;
+  }
+
+  .events-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .event-item {
+    min-height: 180px;
+    padding: 18px;
+  }
+
+  .event-item h3 {
+    font-size: 15px;
+  }
+
+  .contact-section {
+    padding: 80px 0;
+  }
+
+  .contact-section h2 {
+    font-size: clamp(48px, 12vw, 85px);
+    letter-spacing: -3px;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 25px 0;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .brand {
+    font-size: 16px;
+  }
+
+  .hero {
+    min-height: 580px;
+  }
+
+  .hero-top {
+    font-size: 8px;
+  }
+
+  .hero-content {
+    min-height: 460px;
+    padding-top: 100px;
+  }
+
+  .hero h1 {
+    font-size: clamp(82px, 21vw, 115px);
+  }
+
+  .hero-bottom p {
+    font-size: 12px;
+  }
+
+  .hero-footer span:nth-child(2) {
+    display: none;
+  }
+
+  .trajectory-heading h2 {
+    font-size: 48px;
+  }
+
+  .trajectory-card h3 {
+    font-size: 24px;
+  }
+
+  .venue-list {
+    gap: 7px;
+  }
+
+  .venue-list span {
+    font-size: 10px;
+    padding: 8px 9px;
+  }
+
+  .trajectory-stats strong {
+    font-size: 23px;
+  }
+
+  .trajectory-stats span {
+    font-size: 7px;
+  }
+
+  .featured-event {
+    padding: 18px;
+  }
+
+  .featured-event h3 {
+    font-size: 23px;
+  }
+
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music-card {
+    align-items: flex-start;
+  }
+
+  .music-art {
+    width: 85px;
+    height: 85px;
+  }
+
+  .music-info h3 {
+    font-size: 17px;
+  }
+
+  .contact-section h2 {
+    font-size: 47px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================
+   ENERGY VISUALIZER — ROTACIÓN CONTINUA
+========================================= */
+
+/* Los anillos giran de forma independiente; el centro permanece estable. */
+.visual-ring {
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  backface-visibility: hidden;
+}
+
+.ring-one {
+  animation-name: orbit-one !important;
+  animation-duration: 18s !important;
+}
+
+.ring-two {
+  animation-name: orbit-two !important;
+  animation-duration: 7s !important;
+}
+
+.ring-three {
+  animation-name: orbit-three !important;
+  animation-duration: 11s !important;
+}
+
+/* La preferencia de movimiento reducido no detiene este visualizador,
+   solicitado expresamente como parte de la identidad visual del sitio. */
+@media (prefers-reduced-motion: reduce) {
+  .visual-ring {
+    animation-duration: 18s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .ring-two {
+    animation-duration: 7s !important;
+  }
+
+  .ring-three {
+    animation-duration: 11s !important;
+  }
+}
+
+/* Descripción del HERO */
+.hero-description {
+  max-width: 390px;
+  color: #f0ece7;
+  font-size: 14px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  text-wrap: pretty;
+}
+
+@media (max-width: 800px) {
+  .hero-description {
+    max-width: 320px;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+}
+
+
+/* =========================================
+   ENERGY VISUALIZER — ANILLOS MÁS VISIBLES
+   Sobrescribe el acabado anterior sin cambiar
+   la estructura ni la velocidad de rotación.
+========================================= */
+
+.visual {
+  opacity: 1;
+  isolation: isolate;
+}
+
+.visual-ring {
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  will-change: transform, filter;
+}
+
+/* Anillo exterior: trazo discontinuo naranja y luminoso */
+.visual .ring-one {
+  width: 100%;
+  height: 100%;
+  border: 2.5px dashed rgba(255, 91, 31, 0.98);
+  box-shadow:
+    0 0 5px rgba(255, 91, 31, 0.75),
+    0 0 16px rgba(255, 75, 20, 0.38);
+  filter: drop-shadow(0 0 4px rgba(255, 91, 31, 0.75));
+  animation: orbit-one 18s linear infinite !important;
+}
+
+/* Anillo intermedio: segmentos naranjas más gruesos */
+.visual .ring-two {
+  width: 78%;
+  height: 78%;
+  border: 4px solid transparent;
+  border-top-color: #ff5a1f;
+  border-right-color: #ff5a1f;
+  border-bottom-color: rgba(255, 90, 31, 0.42);
+  border-left-color: rgba(255, 90, 31, 0.12);
+  box-shadow:
+    0 0 8px rgba(255, 90, 31, 0.72),
+    0 0 22px rgba(255, 90, 31, 0.32),
+    inset 0 0 10px rgba(255, 90, 31, 0.18);
+  filter: drop-shadow(0 0 5px rgba(255, 90, 31, 0.75));
+  animation: orbit-two 7s linear infinite !important;
+}
+
+/* Anillo interior: línea clara con un segmento naranja */
+.visual .ring-three {
+  width: 55%;
+  height: 55%;
+  border: 2.5px solid rgba(245, 241, 235, 0.62);
+  border-left: 4px solid #ff6a2a;
+  border-bottom-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.16),
+    0 0 13px rgba(255, 90, 31, 0.22);
+  filter: drop-shadow(0 0 4px rgba(255, 90, 31, 0.55));
+  animation: orbit-three 11s linear infinite !important;
+}
+
+/* Resplandor central más presente */
+.visual-center {
+  color: #ff6a2a;
+  filter: drop-shadow(0 0 9px rgba(255, 90, 31, 0.95));
+  text-shadow: 0 0 18px rgba(255, 90, 31, 0.85);
+}
+
+/* Conserva el contraste sobre fotografías claras u oscuras */
+.hero .visual::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.24) 0%,
+    rgba(0, 0, 0, 0.12) 48%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+/* =========================================
+   ACERCA DE — RETRATO ARTÍSTICO DJ BADI
+========================================= */
+
+.about-section {
+  display: grid;
+  grid-template-columns: 0.55fr 1.15fr 1.3fr;
+  align-items: center;
+  gap: clamp(25px, 4vw, 65px);
+  padding: 110px 0;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 5, 0.82),
+    rgba(5, 5, 5, 0.48)
+  );
+}
+
+.about-label {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 12px;
+}
+
+.about-label-line {
+  width: 42px;
+  height: 2px;
+  background: var(--orange);
+}
+
+.about-label-caption {
+  color: #999;
+  font-size: 9px;
+  letter-spacing: 2px;
+  line-height: 1.7;
+}
+
+.about-photo {
+  position: relative;
+  min-height: 560px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 90, 31, 0.35);
+  background-image:
+    linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.65),
+      transparent 45%
+    ),
+    url("/retrato-dj-badi-espaldas.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 20px 65px rgba(0, 0, 0, 0.35);
+}
+
+.about-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.about-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55)
+  );
+}
+
+.about-photo-tag,
+.about-photo-caption {
+  position: absolute;
+  z-index: 2;
+  left: 22px;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.about-photo-tag {
+  top: 22px;
+  color: var(--orange);
+}
+
+.about-photo-caption {
+  bottom: 22px;
+  font-size: 12px;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.about-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.about-content h2 {
+  margin: 0;
+  font-size: clamp(37px, 4.3vw, 65px);
+  line-height: 0.98;
+  letter-spacing: -3px;
+  font-weight: 900;
+}
+
+.about-content h2 span {
+  color: var(--orange);
+}
+
+.about-content h3 {
+  margin: 25px 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.about-content p {
+  max-width: 520px;
+  margin: 12px 0;
+  color: #c1bbb5;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.about-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 23px;
+}
+
+.about-genres span {
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 90, 31, 0.55);
+  background: rgba(255, 90, 31, 0.07);
+  color: #f5f1eb;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  transition: 0.3s;
+}
+
+.about-genres span:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.about-signature {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 35px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: #999;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* TABLETS */
+@media (max-width: 1000px) {
+  .about-section {
+    grid-template-columns: 1fr 1.4fr;
+    gap: 30px;
+  }
+
+  .about-label {
+    grid-column: 1 / -1;
+  }
+
+  .about-photo {
+    min-height: 480px;
+  }
+}
+
+/* CELULARES */
+@media (max-width: 800px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    padding: 75px 0;
+    gap: 30px;
+  }
+
+  .about-label {
+    grid-column: auto;
+  }
+
+  .about-photo {
+    min-height: 480px;
+    background-position: center 35%;
+  }
+
+  .about-content h2 {
+    font-size: clamp(38px, 10vw, 58px);
+    letter-spacing: -2px;
+  }
+
+  .about-content p {
+    font-size: 13px;
+  }
+
+  .about-signature {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-photo {
+    min-height: 400px;
+  }
+
+  .about-genres {
+    gap: 7px;
+  }
+
+  .about-genres span {
+    font-size: 9px;
+    padding: 9px 10px;
+  }
+}
+
+/* =========================================
+   ACERCA DE — COMPOSICIÓN HORIZONTAL
+========================================= */
+
+.about-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(35px, 4vw, 65px);
+  align-items: center;
+
+  width: 100%;
+  padding: 110px 0 100px;
+}
+
+/* Etiqueta superior */
+.about-label {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+}
+
+.about-label-line {
+  width: 35px;
+}
+
+.about-label-caption {
+  font-size: 9px;
+}
+
+/* Fotografía pegada a la izquierda */
+.about-photo {
+  grid-column: 1;
+  width: 100%;
+  min-height: 620px;
+  margin: 0;
+  background-position: center;
+}
+
+/* Texto ocupa todo el espacio derecho */
+.about-content {
+  grid-column: 2;
+  width: 100%;
+  max-width: none;
+  align-items: flex-start;
+}
+
+.about-content h2 {
+  width: 100%;
+  font-size: clamp(38px, 4.2vw, 68px);
+  line-height: 1;
+  letter-spacing: -3px;
+}
+
+.about-content p {
+  width: 100%;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.about-content h3 {
+  margin-top: 25px;
+}
+
+.about-genres {
+  margin-top: 25px;
+}
+
+.about-signature {
+  width: 100%;
+  margin-top: 35px;
+}
+
+/* TABLETS */
+@media (max-width: 1000px) {
+  .about-section {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 30px;
+  }
+
+  .about-photo {
+    min-height: 500px;
+  }
+
+  .about-content h2 {
+    font-size: clamp(34px, 5vw, 52px);
+  }
+}
+
+/* MÓVILES */
+@media (max-width: 800px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 90px 0 75px;
+  }
+
+  .about-label {
+    top: 30px;
+    left: 0;
+  }
+
+  .about-photo,
+  .about-content {
+    grid-column: 1;
+  }
+
+  .about-photo {
+    min-height: 480px;
+    background-position: center 35%;
+  }
+
+  .about-content h2 {
+    font-size: clamp(38px, 10vw, 58px);
+  }
+
+  .about-content p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-photo {
+    min-height: 400px;
+  }
+}
+
+
+/* =========================================
+   TRAYECTORIA — DISEÑO EDITORIAL
+========================================= */
+
+.trajectory-section {
+  padding: 110px 3%;
+}
+
+.trajectory-heading-new {
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 55px;
+  margin-bottom: 45px;
+}
+
+.trajectory-heading-new h2 {
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: -4px;
+  font-weight: 900;
+  line-height: 0.9;
+}
+
+.trajectory-intro {
+  max-width: 570px;
+  padding-left: 30px;
+  border-left: 2px solid rgba(255, 255, 255, 0.65);
+  font-size: clamp(15px, 1.5vw, 20px) !important;
+  line-height: 1.65 !important;
+  color: #eee !important;
+}
+
+.trajectory-grid {
+  gap: 18px;
+}
+
+.trajectory-card {
+  min-height: 310px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.trajectory-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.94) 0%,
+    rgba(0, 0, 0, 0.76) 48%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+  transition: background 0.35s ease;
+}
+
+.trajectory-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--orange);
+  box-shadow: 0 15px 40px rgba(255, 75, 20, 0.12);
+}
+
+.trajectory-card-top {
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.trajectory-card-top svg {
+  color: var(--orange);
+}
+
+.trajectory-card-content {
+  position: relative;
+  z-index: 2;
+  margin-top: 20px;
+}
+
+.trajectory-card h3 {
+  margin: 0 0 8px;
+  font-size: clamp(25px, 3vw, 36px);
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.trajectory-card p {
+  max-width: 360px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.trajectory-clubs {
+  background-image: url("/trayectoria-clubes.jpg");
+}
+
+.trajectory-restobars {
+  background-image: url("/trayectoria-restobares.jpg");
+}
+
+.trajectory-events {
+  background-image: url("/trayectoria-eventos.jpg");
+}
+
+.trajectory-collaborations {
+  background-image: url("/trayectoria-colaboraciones.png");
+}
+
+.venue-list {
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.venue-list span {
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.venue-list span:hover {
+  border-color: var(--orange);
+  background: rgba(255, 90, 31, 0.2);
+}
+
+.trajectory-reference {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 18px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: 0.3s;
+}
+
+.trajectory-card:hover .trajectory-reference {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.collaboration-list {
+  margin-top: 15px;
+}
+
+.collaboration-item {
+  padding: 12px 0;
+}
+
+.collaboration-item strong {
+  font-size: 15px;
+}
+
+.collaboration-item span {
+  line-height: 1.5;
+}
+
+.featured-event-new {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  min-height: 180px;
+  margin-top: 22px;
+  padding: 25px 35px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 90, 31, 0.35);
+  color: white;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.35)),
+    url("/SaborModa.jpg") center 45% / cover no-repeat;
+}
+
+.featured-event-new h3 {
+  font-size: clamp(27px, 4vw, 42px);
+  letter-spacing: -1px;
+}
+
+.featured-event-new h3 span {
+  font-weight: 400;
+}
+
+.featured-event-new > svg {
+  width: 38px;
+  height: 38px;
+}
+
+/* TABLETS */
+@media (max-width: 1000px) {
+  .trajectory-heading-new {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .trajectory-intro {
+    max-width: 700px;
+  }
+}
+
+/* MÓVILES */
+@media (max-width: 800px) {
+  .trajectory-section {
+    padding: 75px 0;
+  }
+
+  .trajectory-heading-new {
+    gap: 20px;
+  }
+
+  .trajectory-heading-new h2 {
+    font-size: clamp(43px, 10vw, 65px);
+    letter-spacing: -3px;
+  }
+
+  .trajectory-intro {
+    padding-left: 18px;
+    font-size: 14px !important;
+  }
+
+  .trajectory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trajectory-card {
+    min-height: 310px;
+    padding: 24px;
+  }
+
+  .trajectory-reference {
+    opacity: 1;
+    transform: none;
+  }
+
+  .featured-event-new {
+  position: relative;
+  min-height: 145px;
+  margin-top: 22px;
+  padding: 25px 35px;
+  overflow: hidden;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.35)),
+    url("E:\badi-web\public/SaborModa.jpg") center 45% / cover no-repeat;
+}
+}
+
+@media (max-width: 480px) {
+  .trajectory-card {
+    min-height: 330px;
+    padding: 20px;
+  }
+
+  .trajectory-card h3 {
+    font-size: 26px;
+  }
+
+  .trajectory-card p {
+    font-size: 12px;
+  }
+
+  .venue-list span {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
 }
