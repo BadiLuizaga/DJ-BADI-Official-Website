@@ -1,14 +1,4 @@
-
-"use client";
-
-import {
-  ArrowUpRight,
-  Headphones,
-  Music2,
-  Play,
-  Radio,
-} from "lucide-react";
-
+import { ArrowUpRight, Headphones, Music2, Radio, Video } from "lucide-react";
 import { artist } from "@/data/artist";
 
 export default function MusicSection() {
@@ -18,27 +8,25 @@ export default function MusicSection() {
   return (
     <section className="music-section-new" id="music">
       <div className="music-container-new">
-
+        {/* Header */}
         <header className="music-heading-new">
           <div>
             <span className="music-kicker-new">
               <span />
               03 / MI UNIVERSO MUSICAL
             </span>
-
             <h2>
-              SELECTED
-              <br />
+              SELECTED<br />
               <span>SOUNDS.</span>
             </h2>
           </div>
-
           <p>
             Una selección de sonidos, mezclas y experiencias musicales.
             Descubre mi propuesta y conecta con mi frecuencia.
           </p>
         </header>
 
+        {/* SoundCloud Feature — left: info, right: player */}
         <div className="music-feature-new">
           <div className="music-feature-info">
             <span className="music-live-label">
@@ -52,6 +40,30 @@ export default function MusicSection() {
               <p>Una sesión de DJ BADI.</p>
             </div>
 
+            {/* Spotify profile link */}
+            <div className="music-player-wrapper">
+              <div className="music-player-top">
+                <span>
+                  <Music2 size={16} />
+                  SPOTIFY
+                </span>
+                <span className="music-player-status">
+                  <span />
+                  ENLACE
+                </span>
+              </div>
+              <a
+                href={artist.social.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="music-external-link"
+              >
+                ABRIR EN SPOTIFY
+                <ArrowUpRight size={17} />
+              </a>
+            </div>
+
+            {/* SoundCloud link */}
             <a
               href="https://soundcloud.com/badi-luizaga/dj-badi-house-mix-vol1"
               target="_blank"
@@ -63,6 +75,7 @@ export default function MusicSection() {
             </a>
           </div>
 
+          {/* SoundCloud player */}
           <div className="music-player-wrapper">
             <div className="music-player-top">
               <span>
@@ -74,7 +87,6 @@ export default function MusicSection() {
                 ONLINE
               </span>
             </div>
-
             <iframe
               title="DJ BADI - House Mix Vol. 1 en SoundCloud"
               width="100%"
@@ -88,67 +100,72 @@ export default function MusicSection() {
           </div>
         </div>
 
-        <div className="music-platform-heading">
-          <span>ENCUÉNTRAME EN</span>
-          <span className="music-platform-line" />
+        {/* YouTube Feature — same structure as SoundCloud: left info, right player */}
+        <div className="music-feature-new music-feature-youtube">
+          <div className="music-feature-info">
+            <span className="music-live-label">
+              <Video size={15} />
+              YOUTUBE / SESIÓN EN VIVO
+            </span>
+
+            <div className="music-feature-title">
+              <span className="music-feature-number">002</span>
+              <h3>ELLA QUIERE <span>BEBER</span></h3>
+              <p>Anuel AA — Extended Edit por DJ BADI.</p>
+            </div>
+
+            {/* YouTube link */}
+            <a
+              href="https://youtu.be/NXuMXYUddWc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="music-external-link"
+            >
+              ABRIR EN YOUTUBE
+              <ArrowUpRight size={17} />
+            </a>
+
+            {/* Channel link */}
+            <a
+              href="https://www.youtube.com/@DJBADIBo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="music-external-link"
+            >
+              CANAL OFICIAL
+              <ArrowUpRight size={17} />
+            </a>
+          </div>
+
+          {/* YouTube player */}
+          <div className="music-player-wrapper">
+            <div className="music-player-top">
+              <span>
+                <Video size={16} />
+                REPRODUCTOR OFICIAL
+              </span>
+              <span className="music-player-status">
+                <span />
+                EN VIVO
+              </span>
+            </div>
+            <iframe
+              title="DJ BADI - Ella Quiere Beber (Anuel AA) Extended Edit"
+              width="100%"
+              height="300"
+              src="https://www.youtube.com/embed/NXuMXYUddWc"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
         </div>
 
-        <div className="music-platforms-new">
-
-          <a
-            href={artist.social.soundcloud}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="music-platform-new"
-          >
-            <div className="music-platform-icon">
-              <Music2 size={25} />
-            </div>
-            <div>
-              <span>SOUNDCLOUD</span>
-              <p>Sets, mezclas y sesiones.</p>
-            </div>
-            <ArrowUpRight size={20} />
-          </a>
-
-          <a
-            href={artist.social.spotify}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="music-platform-new"
-          >
-            <div className="music-platform-icon spotify-icon">
-              <Play size={25} />
-            </div>
-            <div>
-              <span>SPOTIFY</span>
-              <p>Mi perfil musical.</p>
-            </div>
-            <ArrowUpRight size={20} />
-          </a>
-
-          <a
-            href={artist.social.youtube}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="music-platform-new"
-          >
-            <div className="music-platform-icon">
-            </div>
-            <div>
-              <span>YOUTUBE</span>
-              <p>Videos y contenido audiovisual.</p>
-            </div>
-            <ArrowUpRight size={20} />
-          </a>
-
-        </div>
-
+        {/* Signature */}
         <div className="music-signature">
           <span>DJ BADI</span>
           <span>FEEL THE ENERGY. LIVE THE SOUND.</span>
         </div>
-
       </div>
     </section>
   );

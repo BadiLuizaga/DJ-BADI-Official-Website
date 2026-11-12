@@ -6,9 +6,6 @@ import {
   ArrowUpRight,
   Menu,
   MessageCircle,
-  Music2,
-  Play,
-  Video,
   X,
   Zap,
 } from "lucide-react";
@@ -19,27 +16,6 @@ import MusicSection from "@/components/MusicSection";
 
 const WHATSAPP_URL =
   "https://wa.me/59172191333?text=Hola%20DJ%20BADI%2C%20quisiera%20consultar%20disponibilidad%20y%20precios%20para%20una%20presentaci%C3%B3n.";
-
-const platforms = [
-  {
-    name: "SOUNDCLOUD",
-    description: "Escucha mis sets y mezclas.",
-    url: artist.social.soundcloud,
-    icon: Music2,
-  },
-  {
-    name: "SPOTIFY",
-    description: "Descubre mi música.",
-    url: artist.social.spotify,
-    icon: Play,
-  },
-  {
-    name: "YOUTUBE",
-    description: "Mira mis videos y sesiones.",
-    url: artist.social.youtube,
-    icon: Video,
-  },
-];
 
 const eventExperiences = [
   {
@@ -224,56 +200,8 @@ export default function Home() {
       {/* TRAYECTORIA */}
       <TrajectorySection />
 
-      {/* MÚSICA */}{/* MÚSICA */}
+      {/* MÚSICA */}
       <MusicSection />
-      <section className="music-section" id="music">
-        <div className="section-heading">
-          <span className="section-number">03 / MÚSICA</span>
-          <h2>
-            SELECTED <span>SOUNDS.</span>
-          </h2>
-          <p>Explora mi música, mis mezclas y mi contenido audiovisual.</p>
-        </div>
-
-        <div className="music-card">
-          <div className="music-art">
-            <span>BADI</span>
-            <Play size={34} fill="currentColor" />
-          </div>
-
-          <div className="music-info">
-            <span className="eyebrow">ARTIST PROFILE</span>
-            <h3>THE FREQUENCY</h3>
-            <p>Sonidos electrónicos. Dimensiones diferentes.</p>
-          </div>
-
-          <span className="music-index">001</span>
-        </div>
-
-        <div className="music-platforms">
-          {platforms.map((platform) => {
-            const Icon = platform.icon;
-            return (
-              <a
-                key={platform.name}
-                href={platform.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="music-platform"
-              >
-                <div className="platform-icon">
-                  <Icon size={24} />
-                </div>
-                <div className="platform-info">
-                  <span>{platform.name}</span>
-                  <p>{platform.description}</p>
-                </div>
-                <ArrowUpRight size={21} />
-              </a>
-            );
-          })}
-        </div>
-      </section>
 
       {/* EVENTOS */}
       <section className="events-section" id="events">
