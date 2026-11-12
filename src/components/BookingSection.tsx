@@ -155,7 +155,7 @@ export default function BookingSection() {
                 className="booking-direct-btn"
               >
                 <MessageCircle size={18} />
-                WHATSAPP DIRECTO (+591 72191333)
+                WHATSAPP DIRECTO
                 <ArrowUpRight size={16} />
               </a>
             </div>
