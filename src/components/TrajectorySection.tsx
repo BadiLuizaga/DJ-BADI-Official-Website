@@ -26,13 +26,13 @@ export default function TrajectorySection() {
           <div>
             <span className="section-kicker">
               <span className="kicker-line" />
-              MI TRAYECTORIA
+              02 / MI TRAYECTORIA &amp; HITOS
             </span>
 
             <h2>
               CONSTRUIDO A TRAVÉS
               <br />
-              <span>DEL LA MÚSICA.</span>
+              <span>DE LA MÚSICA.</span>
             </h2>
           </div>
 

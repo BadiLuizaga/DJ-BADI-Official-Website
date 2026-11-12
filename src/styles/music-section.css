@@ -71,7 +71,15 @@
   min-height: 380px;
   border: 1px solid var(--border);
   background: rgba(12, 12, 12, 0.85);
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.music-feature-new:hover {
+  border-color: rgba(255, 90, 31, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 90, 31, 0.12);
 }
 
 .music-feature-youtube {
@@ -206,8 +214,9 @@
   width: 100%;
   max-width: 100%;
   border: 0;
-  border-radius: 3px;
+  border-radius: 6px;
   background: #111;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .music-signature {

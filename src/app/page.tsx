@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowUpRight,
   Menu,
+  MessageCircle,
   X,
   Zap,
 } from "lucide-react";
@@ -15,45 +16,54 @@ import MusicSection from "@/components/MusicSection";
 import GallerySection from "@/components/GallerySection";
 import BookingSection from "@/components/BookingSection";
 
-const eventExperiences = [
-  {
-    title: "CLUB NIGHTS",
-    description: "Clubes y experiencias nocturnas.",
-    image:
-      "https://images.unsplash.com/photo-1571266028243-d220c9c3b7e4?auto=format&fit=crop&w=1000&q=85",
-  },
-  {
-    title: "PRIVATE EVENTS",
-    description: "Cumpleaños, bodas y celebraciones privadas.",
-    image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1000&q=85",
-  },
-  {
-    title: "GRADUATIONS",
-    description: "Fiestas de graduación y eventos especiales.",
-    image:
-      "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1000&q=85",
-  },
-  {
-    title: "BRAND EXPERIENCES",
-    description: "Activaciones de marca y festivales temáticos.",
-    image:
-      "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1000&q=85",
-  },
-];
-
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
 
+  // Monitor scroll for navbar elevation & state
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // IntersectionObserver for fluid scroll-triggered entrance animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    const elements = document.querySelectorAll(".reveal-on-scroll");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <main className="site">
-      {/* NAVEGACIÓN */}
-      <nav className="navbar">
+      {/* NAVEGACIÓN STICKY */}
+      <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
         <a href="#top" className="brand" onClick={closeMenu}>
           <span className="brand-symbol">
-            <Zap size={28} />
+            <Zap size={26} />
           </span>
           <span>
             DJ BADI<span className="orange">.</span>
@@ -61,12 +71,21 @@ export default function Home() {
         </a>
 
         <div className={`nav-links ${menuOpen ? "nav-open" : ""}`}>
-          <a href="#about" onClick={closeMenu}>ACERCA DE</a>
-          <a href="#trajectory" onClick={closeMenu}>TRAYECTORIA</a>
-          <a href="#music" onClick={closeMenu}>MÚSICA</a>
-          <a href="#gallery" onClick={closeMenu}>GALERÍA</a>
-          <a href="#events" onClick={closeMenu}>EVENTOS</a>
-          <a href="#contact" onClick={closeMenu}>CONTACTO</a>
+          <a href="#about" onClick={closeMenu}>
+            ACERCA DE
+          </a>
+          <a href="#trajectory" onClick={closeMenu}>
+            TRAYECTORIA
+          </a>
+          <a href="#music" onClick={closeMenu}>
+            MÚSICA
+          </a>
+          <a href="#gallery" onClick={closeMenu}>
+            GALERÍA
+          </a>
+          <a href="#contact" onClick={closeMenu}>
+            CONTACTO
+          </a>
         </div>
 
         <a href="#contact" className="booking">
@@ -91,7 +110,7 @@ export default function Home() {
         style={{
           backgroundImage: `
             linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.22)),
-            linear-gradient(0deg, rgba(0,0,0,.72), transparent 65%),
+            linear-gradient(0deg, rgba(0,0,0,.82), transparent 60%),
             url("/foto-badi-hero.webp")
           `,
           backgroundSize: "cover",
@@ -99,21 +118,27 @@ export default function Home() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="hero-top">
-          <span><Zap size={14} /> ARTISTA DE MÚSICA URBANA / OPEN FORMAT</span>
+        <div className="hero-top hero-anim-1">
+          <span>
+            <Zap size={14} /> ARTISTA DE MÚSICA URBANA / OPEN FORMAT
+          </span>
+          <span className="hero-status-pill">
+            <span className="pulse-dot" /> DISPONIBLE PARA BOOKING 2026
+          </span>
         </div>
 
         <div className="hero-content">
-          <div className="hero-copy">
+          <div className="hero-copy hero-anim-2">
             <h1>
               DJ
               <br />
               <span>BADI</span>
             </h1>
 
-            <div className="hero-bottom">
+            <div className="hero-bottom hero-anim-3">
               <p className="hero-description">
-                DJ &amp; Productor Musical desde 2019.
+                DJ &amp; Productor Musical desde 2019. Llevando energía,
+                ritmo y una atmósfera inolvidable a cada escenario.
               </p>
 
               <a href="#music" className="discover">
@@ -121,12 +146,17 @@ export default function Home() {
               </a>
             </div>
 
-            <a href="#contact" className="hero-booking">
-              CONTRATACIONES <ArrowUpRight size={17} />
-            </a>
+            <div className="hero-actions hero-anim-4">
+              <a href="#contact" className="hero-booking">
+                CONTRATACIONES <ArrowUpRight size={17} />
+              </a>
+              <a href="#gallery" className="hero-secondary-btn">
+                VER GALERÍA
+              </a>
+            </div>
           </div>
 
-          <div className="visual" aria-hidden="true">
+          <div className="visual hero-anim-visual" aria-hidden="true">
             <div className="visual-ring ring-one" />
             <div className="visual-ring ring-two" />
             <div className="visual-ring ring-three" />
@@ -136,19 +166,22 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-footer">
+        <div className="hero-footer hero-anim-4">
           <span>ARTISTA INDEPENDIENTE</span>
           <span>TECH HOUSE · MÚSICA URBANA</span>
           <span>SCZ — BOLIVIA</span>
         </div>
       </section>
 
+      {/* DIVIDER SUAVE */}
+      <div className="section-divider" aria-hidden="true" />
+
       {/* ACERCA DE */}
-      <section className="about-section" id="about">
+      <section className="about-section reveal-on-scroll" id="about">
         <div className="about-label">
           <span className="about-label-line" />
           <span className="about-label-caption">
-            DJ BADI / IDENTIDAD ARTÍSTICA
+            01 / SOBRE MÍ · IDENTIDAD ARTÍSTICA
           </span>
         </div>
 
@@ -197,54 +230,36 @@ export default function Home() {
       </section>
 
       {/* TRAYECTORIA */}
-      <TrajectorySection />
+      <div className="reveal-on-scroll">
+        <TrajectorySection />
+      </div>
 
       {/* MÚSICA */}
-      <MusicSection />
+      <div className="reveal-on-scroll">
+        <MusicSection />
+      </div>
 
       {/* GALERÍA */}
-      <GallerySection />
-
-      {/* EVENTOS */}
-      <section className="events-section" id="events">
-        <div className="section-heading">
-          <span className="section-number">05 / EXPERIENCIAS EN VIVO</span>
-          <h2>
-            BEYOND THE
-            <br />
-            <span>STAGE.</span>
-          </h2>
-          <p>
-            Cada evento tiene su propia energía. Cada público, su propia
-            frecuencia.
-          </p>
-        </div>
-
-        <div className="events-grid">
-          {eventExperiences.map((event, index) => (
-            <article
-              key={event.title}
-              className="event-item event-photo"
-              style={{
-                backgroundImage: `
-                  linear-gradient(0deg, rgba(0,0,0,.94), rgba(0,0,0,.08)),
-                  url("${event.image}")
-                `,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
-            >
-              <span>0{index + 1}</span>
-              <h3>{event.title}</h3>
-              <p>{event.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <div className="reveal-on-scroll">
+        <GallerySection />
+      </div>
 
       {/* BOOKING / CONTACTO */}
-      <BookingSection />
+      <div className="reveal-on-scroll">
+        <BookingSection />
+      </div>
+
+      {/* BOTÓN FLOTANTE DE WHATSAPP / CONTACTO RÁPIDO */}
+      <a
+        href="https://wa.me/59172191333?text=Hola%20DJ%20BADI%2C%20quisiera%20consultar%20disponibilidad%20y%20precios%20para%20un%20evento."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-quick-action"
+        aria-label="Contactar a DJ BADI por WhatsApp"
+      >
+        <MessageCircle size={18} />
+        <span>RESERVAR / WHATSAPP</span>
+      </a>
 
       {/* FOOTER */}
       <footer className="footer">
