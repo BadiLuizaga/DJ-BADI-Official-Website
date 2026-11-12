@@ -1,6 +1,8 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/style.css";
+import "../styles/music-section.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,16 +16,22 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "DJ BADI | Música, eventos y experiencias",
-  description: "Sitio oficial de DJ BADI, artista de música urbana y open format en Santa Cruz de la Sierra.",
+  description:
+    "Sitio oficial de DJ BADI, artista de música urbana y open format en Santa Cruz de la Sierra.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: LayoutProps<"/">) {
   return (
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+      </body>
     </html>
   );
 }
+

@@ -15,6 +15,7 @@ import {
 
 import { artist } from "@/data/artist";
 import TrajectorySection from "@/components/TrajectorySection";
+import MusicSection from "@/components/MusicSection";
 
 const WHATSAPP_URL =
   "https://wa.me/59172191333?text=Hola%20DJ%20BADI%2C%20quisiera%20consultar%20disponibilidad%20y%20precios%20para%20una%20presentaci%C3%B3n.";
@@ -223,7 +224,8 @@ export default function Home() {
       {/* TRAYECTORIA */}
       <TrajectorySection />
 
-      {/* MÚSICA */}
+      {/* MÚSICA */}{/* MÚSICA */}
+      <MusicSection />
       <section className="music-section" id="music">
         <div className="section-heading">
           <span className="section-number">03 / MÚSICA</span>
