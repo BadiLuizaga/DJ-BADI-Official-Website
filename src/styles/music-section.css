@@ -294,3 +294,11 @@
     height: 300px;
   }
 }
+
+/* Móviles muy pequeños (≤ 380px): el título no se corta */
+@media (max-width: 380px) {
+  .music-heading-new h2 {
+    font-size: 14.5vw;
+    letter-spacing: -3px;
+  }
+}

@@ -1,112 +1,98 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Menu,
-  MessageCircle,
-  X,
-  Zap,
-} from "lucide-react";
+import { useEffect, useRef } from "react";
+import { ArrowDown, ArrowUpRight, Zap } from "lucide-react";
 
 import { artist } from "@/data/artist";
+import SiteNavigation from "@/components/SiteNavigation";
+import MarqueeBand from "@/components/MarqueeBand";
 import TrajectorySection from "@/components/TrajectorySection";
 import MusicSection from "@/components/MusicSection";
 import GallerySection from "@/components/GallerySection";
 import BookingSection from "@/components/BookingSection";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
 
-  const closeMenu = () => setMenuOpen(false);
-
-  // Monitor scroll for navbar elevation & state
+  // Profundidad sutil del Hero siguiendo el puntero (solo ratón, sin movimiento reducido)
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+    const hero = heroRef.current;
+    if (!hero) return;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!finePointer.matches || reduced.matches) return;
+
+    let frame = 0;
+    const onMove = (e: PointerEvent) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        hero.style.setProperty("--px", x.toFixed(3));
+        hero.style.setProperty("--py", y.toFixed(3));
+      });
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onLeave = () => {
+      hero.style.setProperty("--px", "0");
+      hero.style.setProperty("--py", "0");
+    };
+    hero.addEventListener("pointermove", onMove);
+    hero.addEventListener("pointerleave", onLeave);
+    return () => {
+      hero.removeEventListener("pointermove", onMove);
+      hero.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
-  // IntersectionObserver for fluid scroll-triggered entrance animations
+  // Las secciones son visibles por defecto (CSS); solo se ocultan con JS activo.
   useEffect(() => {
+    const elements = document.querySelectorAll(".reveal-on-scroll");
+    const revealAll = () =>
+      elements.forEach((el) => el.classList.add("is-revealed"));
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      revealAll();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
           }
         });
       },
       {
-        threshold: 0.12,
+        // threshold 0: también funciona en secciones más altas que la pantalla
+        threshold: 0,
         rootMargin: "0px 0px -40px 0px",
       }
     );
 
-    const elements = document.querySelectorAll(".reveal-on-scroll");
     elements.forEach((el) => observer.observe(el));
 
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
     <main className="site">
-      {/* NAVEGACIÓN STICKY */}
-      <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
-        <a href="#top" className="brand" onClick={closeMenu}>
-          <span className="brand-symbol">
-            <Zap size={26} />
-          </span>
-          <span>
-            DJ BADI<span className="orange">.</span>
-          </span>
-        </a>
-
-        <div className={`nav-links ${menuOpen ? "nav-open" : ""}`}>
-          <a href="#about" onClick={closeMenu}>
-            ACERCA DE
-          </a>
-          <a href="#trajectory" onClick={closeMenu}>
-            TRAYECTORIA
-          </a>
-          <a href="#music" onClick={closeMenu}>
-            MÚSICA
-          </a>
-          <a href="#gallery" onClick={closeMenu}>
-            GALERÍA
-          </a>
-          <a href="#contact" onClick={closeMenu}>
-            CONTACTO
-          </a>
-        </div>
-
-        <a href="#contact" className="booking">
-          BOOKING <ArrowUpRight size={16} />
-        </a>
-
-        <button
-          className="mobile-menu"
-          type="button"
-          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((current) => !current)}
-        >
-          {menuOpen ? <X size={25} /> : <Menu size={25} />}
-        </button>
-      </nav>
+      <SiteNavigation />
 
       {/* INICIO / HERO */}
       <section
         className="hero"
         id="top"
+        ref={heroRef}
         style={{
           backgroundImage: `
             linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.22)),
@@ -171,10 +157,15 @@ export default function Home() {
           <span>TECH HOUSE · MÚSICA URBANA</span>
           <span>SCZ — BOLIVIA</span>
         </div>
+
+        <a href="#about" className="scroll-cue" aria-label="Desplazarse a la siguiente sección">
+          <span className="scroll-cue-line" />
+          <span className="scroll-cue-text">SCROLL</span>
+        </a>
       </section>
 
-      {/* DIVIDER SUAVE */}
-      <div className="section-divider" aria-hidden="true" />
+      {/* CINTA DE IDENTIDAD SONORA */}
+      <MarqueeBand />
 
       {/* ACERCA DE */}
       <section className="about-section reveal-on-scroll" id="about">
@@ -249,27 +240,8 @@ export default function Home() {
         <BookingSection />
       </div>
 
-      {/* BOTÓN FLOTANTE DE WHATSAPP / CONTACTO RÁPIDO */}
-      <a
-        href="https://wa.me/59172191333?text=Hola%20DJ%20BADI%2C%20quisiera%20consultar%20disponibilidad%20y%20precios%20para%20un%20evento."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="floating-quick-action"
-        aria-label="Contactar a DJ BADI por WhatsApp"
-      >
-        <MessageCircle size={18} />
-        <span>RESERVAR / WHATSAPP</span>
-      </a>
-
-      {/* FOOTER */}
-      <footer className="footer">
-        <a href="#top" className="footer-brand">
-          <Zap size={20} />
-          DJ BADI.
-        </a>
-        <span>© 2026 DJ BADI. TODOS LOS DERECHOS RESERVADOS.</span>
-        <span>FEEL THE ENERGY. LIVE THE SOUND.</span>
-      </footer>
+      {/* CIERRE / FOOTER */}
+      <SiteFooter />
     </main>
   );
 }

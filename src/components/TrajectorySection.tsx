@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { artist } from "@/data/artist";
+import CountUp from "@/components/CountUp";
 
 const cardBackground = (image: string) => ({
   backgroundImage: `linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.38)), linear-gradient(0deg, rgba(0,0,0,.55), transparent), url("${image}")`,
@@ -18,6 +19,22 @@ const cardBackground = (image: string) => ({
 });
 
 export default function TrajectorySection() {
+  const featuredUrl = artist.featuredEvent.url;
+  const featuredContent = (
+    <div>
+      <span className="featured-label">
+        <Sparkles size={14} />
+        EVENTO DESTACADO
+      </span>
+
+      <h3>{artist.featuredEvent.name}</h3>
+
+      <p>
+        {artist.featuredEvent.venue} · {artist.featuredEvent.location}
+      </p>
+    </div>
+  );
+
   return (
     <section id="trajectory" className="trajectory-section">
       <div className="trajectory-container">
@@ -46,20 +63,28 @@ export default function TrajectorySection() {
 
         <div className="trajectory-stats">
           <div>
-            <strong>2019</strong>
+            <strong>
+              <CountUp value={artist.since} from={2000} />
+            </strong>
             <span>INICIO DE TRAYECTORIA</span>
           </div>
 
           <div>
             <strong>
-              {artist.venues.clubs.length +
-                artist.venues.restoBars.length}+
+              <CountUp
+                value={
+                  artist.venues.clubs.length + artist.venues.restoBars.length
+                }
+                suffix="+"
+              />
             </strong>
             <span>ESCENARIOS</span>
           </div>
 
           <div>
-            <strong>{artist.events.length}</strong>
+            <strong>
+              <CountUp value={artist.events.length} />
+            </strong>
             <span>TIPOS DE EVENTOS</span>
           </div>
         </div>
@@ -87,15 +112,6 @@ export default function TrajectorySection() {
                   <span key={venue}>{venue}</span>
                 ))}
               </div>
-
-              <a
-                href="https://ra.co/clubs/113299"
-                target="_blank"
-                rel="noreferrer"
-                className="trajectory-reference"
-              >
-                VER REFERENCIA <ArrowUpRight size={15} />
-              </a>
             </div>
           </article>
 
@@ -124,7 +140,7 @@ export default function TrajectorySection() {
               <a
                 href="https://www.tripadvisor.es/Restaurant_Review-g297317-d18193721-Reviews-Kaos_Resto_Bar-Santa_Cruz_Santa_Cruz_Department.html"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="trajectory-reference"
               >
                 VER REFERENCIA <ArrowUpRight size={15} />
@@ -153,15 +169,6 @@ export default function TrajectorySection() {
                   <span key={event}>{event}</span>
                 ))}
               </div>
-
-              <a
-                href="https://www.tiktok.com/@maryeventostotoysaucedo/photo/7629734839071132949"
-                target="_blank"
-                rel="noreferrer"
-                className="trajectory-reference"
-              >
-                VER EVENTO <ArrowUpRight size={15} />
-              </a>
             </div>
           </article>
 
@@ -187,7 +194,7 @@ export default function TrajectorySection() {
                     key={collaboration.name}
                     href={collaboration.instagram}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="collaboration-item"
                   >
                     <div>
@@ -203,29 +210,21 @@ export default function TrajectorySection() {
           </article>
         </div>
 
-        {/* EVENTO DESTACADO: SABOR A MODA */}
-        <a
-        className="featured-event-new"
-        href="https://www.instagram.com/"
-        target="_blank"
-        rel="noreferrer"
-        >
-        <div>
-          <span className="featured-label">
-            <Sparkles size={14} />
-            EVENTO DESTACADO
-          </span>
-
-          <h3>{artist.featuredEvent.name}</h3>
-
-          <p>
-            {artist.featuredEvent.venue} ·{" "}
-            {artist.featuredEvent.location}
-          </p>
-        </div>
-
-        <ArrowUpRight size={28} />
-        </a>
+        {/* EVENTO DESTACADO: SABOR A MODA
+            Sin enlace externo hasta contar con una publicación oficial verificada. */}
+        {featuredUrl ? (
+          <a
+            className="featured-event-new"
+            href={featuredUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {featuredContent}
+            <ArrowUpRight size={28} />
+          </a>
+        ) : (
+          <div className="featured-event-new">{featuredContent}</div>
+        )}
 
       </div>
     </section>

@@ -477,3 +477,250 @@
   }
 }
 
+
+/* -----------------------------------------
+   Experiencia: transiciones, carrusel móvil
+   y Lightbox con miniaturas
+----------------------------------------- */
+
+/* Entrada escalonada al cargar o cambiar de filtro.
+   Usa "translate" para no interferir con el transform del hover. */
+.gallery-item {
+  animation: galleryItemIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes galleryItemIn {
+  from {
+    opacity: 0;
+    translate: 0 26px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.gallery-image-wrapper {
+  background: linear-gradient(135deg, rgba(255, 90, 31, 0.08), rgba(20, 20, 20, 0.9));
+}
+
+/* Transición entre fotografías del Lightbox */
+.lightbox-img {
+  max-height: min(75vh, calc(90vh - 210px));
+  animation: lightboxImgIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lightbox-image-container {
+  max-height: min(75vh, calc(90vh - 210px));
+  touch-action: pan-y;
+}
+
+@keyframes lightboxImgIn {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.lightbox-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0 24px 18px;
+  overflow-x: auto;
+  background: rgba(14, 14, 14, 0.95);
+  scrollbar-width: none;
+}
+
+.lightbox-thumb {
+  flex: 0 0 auto;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background: #000;
+  opacity: 0.45;
+  cursor: pointer;
+  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lightbox-thumb:hover {
+  opacity: 0.85;
+}
+
+.lightbox-thumb.is-active {
+  opacity: 1;
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(255, 90, 31, 0.35);
+}
+
+/* Controles del carrusel: solo en móvil */
+.gallery-carousel-controls {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .gallery-masonry {
+    display: flex;
+    gap: 14px;
+    column-count: auto;
+    margin-inline: calc(50% - 50vw);
+    padding: 6px calc(50vw - 50%) 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(50vw - 50%);
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .gallery-masonry::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-item {
+    flex: 0 0 80%;
+    margin: 0;
+    scroll-snap-align: center;
+  }
+
+  .gallery-item:hover {
+    transform: none;
+  }
+
+  .gallery-image-wrapper {
+    aspect-ratio: 4 / 5;
+  }
+
+  .gallery-image {
+    height: 100%;
+  }
+
+  /* Sin hover en táctil: la información queda visible */
+  .gallery-overlay {
+    opacity: 1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+  }
+
+  .gallery-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 22px;
+  }
+
+  .gallery-carousel-counter {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gallery-carousel-counter strong {
+    color: #ffffff;
+  }
+
+  .gallery-carousel-dots {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .gallery-carousel-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+  }
+
+  .gallery-carousel-dots span.is-active {
+    width: 22px;
+    background: var(--orange);
+  }
+
+  .gallery-carousel-arrows {
+    display: flex;
+    gap: 8px;
+  }
+
+  .gallery-carousel-arrows button {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: rgba(14, 14, 14, 0.8);
+    color: #ffffff;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .gallery-carousel-arrows button:active {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+
+  .lightbox-nav-btn {
+    display: none;
+  }
+
+  .lightbox-thumbs {
+    justify-content: flex-start;
+    padding: 0 18px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item,
+  .lightbox-img {
+    animation: none;
+  }
+}
+
+/* Filtros en una sola fila deslizable en móvil */
+@media (max-width: 768px) {
+  .gallery-filters {
+    flex-wrap: nowrap;
+    margin-inline: calc(50% - 50vw);
+    padding-inline: calc(50vw - 50%);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .gallery-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Móviles muy pequeños (≤ 380px): el título no se corta */
+@media (max-width: 380px) {
+  .gallery-heading h2 {
+    font-size: 12.5vw;
+    letter-spacing: -3px;
+  }
+}

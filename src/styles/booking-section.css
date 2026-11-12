@@ -227,7 +227,6 @@
 }
 
 .booking-field input,
-.booking-field select,
 .booking-field textarea {
   width: 100%;
   padding: 14px 16px;
@@ -242,20 +241,6 @@
   color-scheme: dark;
 }
 
-.booking-field select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5a1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 38px;
-  cursor: pointer;
-}
-
-.booking-field select option {
-  background: #111111;
-  color: #ffffff;
-}
-
 .booking-field textarea {
   resize: vertical;
   min-height: 100px;
@@ -268,15 +253,13 @@
 }
 
 .booking-field input:focus,
-.booking-field select:focus,
 .booking-field textarea:focus {
   border-color: var(--orange);
   background: rgba(18, 18, 18, 0.95);
   box-shadow: 0 0 0 2px rgba(255, 90, 31, 0.18);
 }
 
-.booking-field input.input-error,
-.booking-field select.input-error {
+.booking-field input.input-error {
   border-color: #ff334b;
   background: rgba(255, 51, 75, 0.05);
 }
@@ -372,3 +355,320 @@
   }
 }
 
+
+/* =========================================
+   ASISTENTE DE RESERVA EN 3 PASOS
+========================================= */
+
+.booking-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.booking-steps button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #6f6964;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-align: left;
+  cursor: default;
+  transition: color 0.3s ease;
+}
+
+.booking-steps li.is-done button {
+  color: #c4bfba;
+  cursor: pointer;
+}
+
+.booking-steps li.is-done button:hover {
+  color: var(--orange);
+}
+
+.booking-steps li.is-current button {
+  color: #ffffff;
+}
+
+.booking-step-index {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  font-size: 11px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.booking-steps li.is-current .booking-step-index {
+  border-color: var(--orange);
+  color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.12);
+}
+
+.booking-steps li.is-done .booking-step-index {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #ffffff;
+}
+
+.booking-progress {
+  height: 2px;
+  margin-bottom: 30px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.booking-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+  box-shadow: 0 0 10px rgba(255, 90, 31, 0.6);
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.booking-step-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  animation: bookingStepIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes bookingStepIn {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.booking-step-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  outline: none;
+}
+
+.booking-step-heading span {
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+/* Tipo de evento como chips seleccionables */
+.booking-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.booking-fieldset legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 0;
+  color: #c4bfba;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.booking-fieldset legend svg {
+  color: var(--orange);
+}
+
+.booking-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.booking-fieldset .booking-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.85);
+  color: #d6d0ca;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.booking-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.booking-fieldset .booking-chip:hover {
+  border-color: rgba(255, 90, 31, 0.6);
+  color: #ffffff;
+}
+
+.booking-fieldset .booking-chip.is-selected {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(255, 90, 31, 0.35);
+}
+
+.booking-chip:has(input:focus-visible) {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.booking-chips.has-error .booking-chip:not(.is-selected) {
+  border-color: rgba(255, 51, 75, 0.55);
+}
+
+/* Resumen previo al envío */
+.booking-summary {
+  padding: 18px 20px;
+  border: 1px dashed rgba(255, 90, 31, 0.4);
+  background: rgba(255, 90, 31, 0.04);
+}
+
+.booking-summary-title {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--orange);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.booking-summary dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.booking-summary dl > div {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.booking-summary dt {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.booking-summary dd {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.booking-summary dd button {
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--orange);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Botones del asistente */
+.booking-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.booking-actions .booking-submit-btn {
+  flex: 1;
+}
+
+.booking-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.booking-back-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+@media (max-width: 680px) {
+  .booking-step-title {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .booking-steps button {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .booking-back-btn {
+    padding: 0 16px;
+  }
+
+  .booking-fieldset .booking-chip {
+    padding: 10px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-step-panel {
+    animation: none;
+  }
+}
+
+.booking-actions .booking-submit-btn {
+  gap: 10px;
+  padding-inline: 16px;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}

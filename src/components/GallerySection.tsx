@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import {
   ChevronLeft,
   ChevronRight,
@@ -17,6 +17,9 @@ export interface GalleryItem {
   category: "performances" | "events";
   categoryLabel: string;
   location: string;
+  /** Dimensiones originales: reservan el espacio y evitan saltos de diseño. */
+  width: number;
+  height: number;
 }
 
 const GALLERY_ITEMS: GalleryItem[] = [
@@ -28,6 +31,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: "performances",
     categoryLabel: "PRESENTACIONES",
     location: "Live Performance",
+    width: 3024,
+    height: 4032,
   },
   {
     id: "badi-m",
@@ -37,6 +42,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: "performances",
     categoryLabel: "PRESENTACIONES",
     location: "Club Set",
+    width: 3024,
+    height: 4032,
   },
   {
     id: "badi-cancun",
@@ -46,6 +53,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: "performances",
     categoryLabel: "PRESENTACIONES",
     location: "Tour Especial",
+    width: 1086,
+    height: 1448,
   },
   {
     id: "badi-q",
@@ -55,6 +64,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: "performances",
     categoryLabel: "PRESENTACIONES",
     location: "Main Stage",
+    width: 1170,
+    height: 2052,
   },
   {
     id: "badi-milu",
@@ -64,6 +75,8 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: "events",
     categoryLabel: "EVENTOS",
     location: "Evento Exclusivo",
+    width: 1086,
+    height: 1448,
   },
 ];
 
@@ -72,6 +85,12 @@ type FilterType = "all" | "performances" | "events";
 export default function GallerySection() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const scrollFrameRef = useRef(0);
+  const touchStartXRef = useRef<number | null>(null);
 
   // Filter items
   const filteredItems = GALLERY_ITEMS.filter((item) => {
@@ -85,8 +104,62 @@ export default function GallerySection() {
     events: GALLERY_ITEMS.filter((i) => i.category === "events").length,
   };
 
+  const changeFilter = (filter: FilterType) => {
+    setActiveFilter(filter);
+    setActiveSlide(0);
+    trackRef.current?.scrollTo({ left: 0 });
+  };
+
+  // Carrusel móvil: detecta la fotografía centrada al deslizar
+  const handleTrackScroll = () => {
+    if (scrollFrameRef.current) return;
+    scrollFrameRef.current = requestAnimationFrame(() => {
+      scrollFrameRef.current = 0;
+      const track = trackRef.current;
+      if (!track) return;
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0;
+      let minDistance = Infinity;
+      Array.from(track.children).forEach((child, i) => {
+        const el = child as HTMLElement;
+        const distance = Math.abs(el.offsetLeft + el.offsetWidth / 2 - center);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = i;
+        }
+      });
+      setActiveSlide(closest);
+    });
+  };
+
+  const goToSlide = (index: number) => {
+    const track = trackRef.current;
+    const total = filteredItems.length;
+    if (!track || total === 0) return;
+    const target = track.children[(index + total) % total] as HTMLElement;
+    track.scrollTo({
+      left: target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  };
+
+  // Lightbox: gesto de deslizar en pantallas táctiles
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    touchStartXRef.current = null;
+    if (Math.abs(deltaX) < 45) return;
+    if (deltaX < 0) showNext();
+    else showPrev();
+  };
+
   // Lightbox handlers
   const openLightbox = (index: number) => {
+    lastFocusedRef.current = document.activeElement as HTMLElement | null;
     setLightboxIndex(index);
   };
 
@@ -104,10 +177,20 @@ export default function GallerySection() {
     setLightboxIndex((prev) => (prev! - 1 + filteredItems.length) % filteredItems.length);
   }, [lightboxIndex, filteredItems.length]);
 
+  const isLightboxOpen = lightboxIndex !== null;
+
+  // Focus management: move focus into the dialog and restore it on close
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+    closeButtonRef.current?.focus();
+    return () => {
+      lastFocusedRef.current?.focus();
+    };
+  }, [isLightboxOpen]);
+
   // Keyboard navigation & body scroll lock
   useEffect(() => {
     if (lightboxIndex === null) {
-      document.body.style.overflow = "";
       return;
     }
 
@@ -120,6 +203,20 @@ export default function GallerySection() {
         showNext();
       } else if (e.key === "ArrowLeft") {
         showPrev();
+      } else if (e.key === "Tab") {
+        // Keep keyboard focus inside the dialog
+        const dialog = document.querySelector<HTMLElement>(".gallery-lightbox");
+        const focusable = dialog?.querySelectorAll<HTMLElement>("button");
+        if (!focusable || focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -154,42 +251,44 @@ export default function GallerySection() {
         </header>
 
         {/* Filter Navigation */}
-        <div className="gallery-filters" role="tablist" aria-label="Filtros de galería">
+        <div className="gallery-filters" role="group" aria-label="Filtros de galería">
           <button
             type="button"
-            role="tab"
-            aria-selected={activeFilter === "all"}
+            aria-pressed={activeFilter === "all"}
             className={`gallery-filter-btn ${activeFilter === "all" ? "active" : ""}`}
-            onClick={() => setActiveFilter("all")}
+            onClick={() => changeFilter("all")}
           >
             TODAS <span>({counts.all})</span>
           </button>
           <button
             type="button"
-            role="tab"
-            aria-selected={activeFilter === "performances"}
+            aria-pressed={activeFilter === "performances"}
             className={`gallery-filter-btn ${activeFilter === "performances" ? "active" : ""}`}
-            onClick={() => setActiveFilter("performances")}
+            onClick={() => changeFilter("performances")}
           >
             PRESENTACIONES <span>({counts.performances})</span>
           </button>
           <button
             type="button"
-            role="tab"
-            aria-selected={activeFilter === "events"}
+            aria-pressed={activeFilter === "events"}
             className={`gallery-filter-btn ${activeFilter === "events" ? "active" : ""}`}
-            onClick={() => setActiveFilter("events")}
+            onClick={() => changeFilter("events")}
           >
             EVENTOS <span>({counts.events})</span>
           </button>
         </div>
 
-        {/* Masonry / Editorial Grid */}
-        <div className="gallery-masonry">
+        {/* Masonry editorial (escritorio) · carrusel deslizable (móvil) */}
+        <div
+          className="gallery-masonry"
+          ref={trackRef}
+          onScroll={handleTrackScroll}
+        >
           {filteredItems.map((item, index) => (
             <figure
-              key={item.id}
+              key={`${activeFilter}-${item.id}`}
               className={`gallery-item gallery-item-${index + 1}`}
+              style={{ "--i": index } as React.CSSProperties}
               onClick={() => openLightbox(index)}
               tabIndex={0}
               role="button"
@@ -202,11 +301,12 @@ export default function GallerySection() {
               }}
             >
               <div className="gallery-image-wrapper">
-                {/* Standard img tag for optimal raw asset loading with fallback */}
-                <img
+                <Image
                   src={item.src}
                   alt={item.alt}
-                  loading="lazy"
+                  width={item.width}
+                  height={item.height}
+                  sizes="(max-width: 768px) 94vw, (max-width: 1024px) 47vw, 434px"
                   className="gallery-image"
                 />
                 <div className="gallery-overlay">
@@ -225,6 +325,40 @@ export default function GallerySection() {
             </figure>
           ))}
         </div>
+
+        {/* Controles del carrusel (solo móvil) */}
+        {filteredItems.length > 1 && (
+          <div className="gallery-carousel-controls">
+            <span className="gallery-carousel-counter" aria-live="polite">
+              <strong>{String(activeSlide + 1).padStart(2, "0")}</strong> /{" "}
+              {String(filteredItems.length).padStart(2, "0")}
+            </span>
+            <div className="gallery-carousel-dots" aria-hidden="true">
+              {filteredItems.map((item, index) => (
+                <span
+                  key={item.id}
+                  className={index === activeSlide ? "is-active" : undefined}
+                />
+              ))}
+            </div>
+            <div className="gallery-carousel-arrows">
+              <button
+                type="button"
+                onClick={() => goToSlide(activeSlide - 1)}
+                aria-label="Fotografía anterior del carrusel"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                type="button"
+                onClick={() => goToSlide(activeSlide + 1)}
+                aria-label="Fotografía siguiente del carrusel"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Lightbox Modal */}
@@ -242,6 +376,7 @@ export default function GallerySection() {
           <button
             type="button"
             className="lightbox-close-btn"
+            ref={closeButtonRef}
             onClick={closeLightbox}
             aria-label="Cerrar vista ampliada (Escape)"
           >
@@ -283,10 +418,19 @@ export default function GallerySection() {
             className="lightbox-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="lightbox-image-container">
-              <img
+            <div
+              className="lightbox-image-container"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <Image
+                key={currentItem.id}
                 src={currentItem.src}
                 alt={currentItem.alt}
+                width={currentItem.width}
+                height={currentItem.height}
+                sizes="85vw"
+                loading="eager"
                 className="lightbox-img"
               />
             </div>
@@ -299,10 +443,34 @@ export default function GallerySection() {
               </div>
               <div className="lightbox-info-right">
                 <span className="lightbox-counter">
-                  0{lightboxIndex! + 1} / 0{filteredItems.length}
+                  {String(lightboxIndex! + 1).padStart(2, "0")} /{" "}
+                  {String(filteredItems.length).padStart(2, "0")}
                 </span>
               </div>
             </div>
+
+            {filteredItems.length > 1 && (
+              <div className="lightbox-thumbs" role="group" aria-label="Miniaturas">
+                {filteredItems.map((item, index) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`lightbox-thumb ${index === lightboxIndex ? "is-active" : ""}`}
+                    onClick={() => setLightboxIndex(index)}
+                    aria-label={`Ver fotografía: ${item.title}`}
+                    aria-current={index === lightboxIndex ? "true" : undefined}
+                  >
+                    <Image
+                      src={item.src}
+                      alt=""
+                      width={item.width}
+                      height={item.height}
+                      sizes="72px"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -13,8 +13,9 @@ biography:
   "Desde 2019, DJ BADI ha desarrollado una propuesta musical propia a través de presentaciones en clubes, restobares, eventos privados y escenarios especiales. Su identidad combina la energía de la música urbana, la versatilidad del Open Format y los sonidos electrónicos del Tech House. Cada presentación busca conectar con el público, interpretar la energía del momento y transformar la música en una experiencia.",
 
 
+  // Instagram oficial pendiente: agregar aquí (instagram: "https://...")
+  // cuando se confirme el perfil. No usar la portada genérica de Instagram.
   social: {
-    instagram: "https://www.instagram.com/",
     soundcloud: "https://soundcloud.com/badi-luizaga",
     youtube: "https://www.youtube.com/@DJBADIBo",
     spotify:
@@ -71,5 +72,7 @@ biography:
     name: "Sabor a Moda 2024",
     venue: "La Chapultepec",
     location: "Boulevard Santa Ana",
+    // Enlace oficial pendiente de verificar. Si se define, la tarjeta se vuelve enlace.
+    url: undefined as string | undefined,
   },
 };
