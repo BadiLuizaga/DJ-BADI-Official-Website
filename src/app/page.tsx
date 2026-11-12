@@ -12,6 +12,7 @@ import {
 import { artist } from "@/data/artist";
 import TrajectorySection from "@/components/TrajectorySection";
 import MusicSection from "@/components/MusicSection";
+import GallerySection from "@/components/GallerySection";
 import BookingSection from "@/components/BookingSection";
 
 const eventExperiences = [
@@ -63,6 +64,7 @@ export default function Home() {
           <a href="#about" onClick={closeMenu}>ACERCA DE</a>
           <a href="#trajectory" onClick={closeMenu}>TRAYECTORIA</a>
           <a href="#music" onClick={closeMenu}>MÚSICA</a>
+          <a href="#gallery" onClick={closeMenu}>GALERÍA</a>
           <a href="#events" onClick={closeMenu}>EVENTOS</a>
           <a href="#contact" onClick={closeMenu}>CONTACTO</a>
         </div>
@@ -200,10 +202,13 @@ export default function Home() {
       {/* MÚSICA */}
       <MusicSection />
 
+      {/* GALERÍA */}
+      <GallerySection />
+
       {/* EVENTOS */}
       <section className="events-section" id="events">
         <div className="section-heading">
-          <span className="section-number">04 / EXPERIENCIAS EN VIVO</span>
+          <span className="section-number">05 / EXPERIENCIAS EN VIVO</span>
           <h2>
             BEYOND THE
             <br />

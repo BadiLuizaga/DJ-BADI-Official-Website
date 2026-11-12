@@ -117,7 +117,7 @@ export default function BookingSection() {
           <div className="booking-info">
             <span className="booking-kicker">
               <span className="booking-kicker-line" />
-              05 / BOOKING &amp; CONTACT
+              06 / BOOKING &amp; CONTACT
             </span>
 
             <h2>
