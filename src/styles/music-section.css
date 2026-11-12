@@ -302,3 +302,144 @@
     letter-spacing: -3px;
   }
 }
+
+/* =========================================
+   EXPLORACIÓN INTERACTIVA
+   Mismo sistema que la Galería: filtros,
+   entrada escalonada, carrusel móvil y
+   modo escenario (vista ampliada).
+========================================= */
+
+.music-section-new .gallery-filters {
+  margin-bottom: 28px;
+}
+
+.music-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.music-tracks .music-feature-youtube {
+  margin-top: 0;
+}
+
+.music-player-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-stage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.music-stage-btn svg {
+  color: inherit;
+}
+
+.music-stage-btn:hover {
+  border-color: var(--orange);
+  background: var(--orange);
+  transform: translateY(-1px);
+}
+
+.music-player-placeholder {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  height: 300px;
+  border: 1px dashed rgba(255, 90, 31, 0.4);
+  border-radius: 6px;
+  background: radial-gradient(circle, rgba(255, 90, 31, 0.12), #0b0b0b 70%);
+  color: #bbb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* Modo escenario */
+.explore-dialog-music .explore-dialog-content {
+  width: min(1000px, 92vw);
+}
+
+.music-stage {
+  background: #000;
+  animation: lightboxImgIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.music-stage iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+.music-stage-youtube iframe {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: calc(90vh - 200px);
+}
+
+.music-stage-soundcloud iframe {
+  height: min(450px, calc(90vh - 200px));
+}
+
+.explore-thumb-number {
+  gap: 2px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.explore-thumb-number svg {
+  color: var(--orange);
+}
+
+/* Carrusel deslizable en móvil */
+@media (max-width: 768px) {
+  .music-tracks.explore-track {
+    flex-direction: row;
+    gap: 14px;
+    margin-inline: calc(50% - 50vw);
+    padding: 6px calc(50vw - 50%) 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(50vw - 50%);
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .music-tracks.explore-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .music-tracks .music-feature-new {
+    flex: 0 0 88%;
+    scroll-snap-align: center;
+  }
+
+  .music-player-top {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-stage {
+    animation: none;
+  }
+}

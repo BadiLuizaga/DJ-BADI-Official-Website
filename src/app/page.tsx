@@ -14,6 +14,19 @@ import SiteFooter from "@/components/SiteFooter";
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
+  const aboutFxRef = useRef<HTMLDivElement>(null);
+
+  // El fondo animado de "Sobre mí" solo se ejecuta mientras está en pantalla
+  useEffect(() => {
+    const fx = aboutFxRef.current;
+    if (!fx || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => fx.classList.toggle("is-running", entry.isIntersecting),
+      { rootMargin: "100px 0px" }
+    );
+    observer.observe(fx);
+    return () => observer.disconnect();
+  }, []);
 
   // Profundidad sutil del Hero siguiendo el puntero (solo ratón, sin movimiento reducido)
   useEffect(() => {
@@ -181,6 +194,14 @@ export default function Home() {
           role="img"
           aria-label="DJ BADI de espaldas, con su camiseta y logo durante una presentación"
         >
+          {/* Fondo vivo: capas de luz (solo transform/opacity) fusionadas en
+              "overlay"; sobre la silueta oscura del DJ no tienen efecto,
+              así que la persona y el logo permanecen estáticos. */}
+          <div className="about-photo-fx" ref={aboutFxRef} aria-hidden="true">
+            <span className="about-fx-haze about-fx-haze-a" />
+            <span className="about-fx-haze about-fx-haze-b" />
+            <span className="about-fx-beam" />
+          </div>
           <div className="about-photo-overlay" />
           <span className="about-photo-caption">
             SANTA CRUZ DE LA SIERRA · BOLIVIA

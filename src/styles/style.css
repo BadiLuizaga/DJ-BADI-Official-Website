@@ -1481,3 +1481,352 @@ img {
     padding: 7px 9px;
   }
 }
+
+/* =========================================
+   TRAYECTORIA — EXPLORACIÓN INTERACTIVA
+   Mismo sistema que la Galería: filtros,
+   entrada escalonada, carrusel móvil y
+   vista ampliada con miniaturas.
+========================================= */
+
+.trajectory-section .gallery-filters {
+  margin-bottom: 28px;
+}
+
+.explore-item {
+  animation: galleryItemIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.trajectory-card.explore-item {
+  cursor: pointer;
+}
+
+/* Icono de la tarjeta = botón para explorar */
+.explore-open-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin: -9px -9px -9px 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--orange);
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.3s ease;
+}
+
+.explore-open-btn svg {
+  position: absolute;
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.explore-open-zoom {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.trajectory-card:hover .explore-open-btn,
+.explore-open-btn:focus-visible {
+  border-color: var(--orange);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.trajectory-card:hover .explore-open-icon,
+.explore-open-btn:focus-visible .explore-open-icon {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.trajectory-card:hover .explore-open-zoom,
+.explore-open-btn:focus-visible .explore-open-zoom {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Vista ampliada (estructura del Lightbox de la Galería) */
+.explore-dialog-content {
+  width: min(880px, 92vw);
+}
+
+.explore-dialog-stage {
+  width: 100%;
+  max-height: calc(90vh - 190px);
+  overflow-y: auto;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+}
+
+.trajectory-detail {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-height: 380px;
+  padding: 34px;
+  background-color: #0b0b0b;
+  animation: lightboxImgIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.trajectory-detail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.7) 55%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+.trajectory-detail .trajectory-card-top svg {
+  color: var(--orange);
+}
+
+.trajectory-detail-body {
+  position: relative;
+  z-index: 2;
+}
+
+.trajectory-detail-body h3 {
+  margin: 0 0 12px;
+  font-size: clamp(34px, 5vw, 62px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -2px;
+}
+
+.trajectory-detail-body p {
+  max-width: 480px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.trajectory-detail .venue-list span {
+  font-size: 12px;
+  padding: 9px 13px;
+}
+
+.trajectory-detail .trajectory-reference {
+  opacity: 1;
+  transform: none;
+}
+
+.trajectory-detail .collaboration-list {
+  max-width: 520px;
+}
+
+/* Miniaturas sin fotografía (icono o número) */
+.explore-thumb-art {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #141414;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 100px rgba(0, 0, 0, 0.45);
+  color: var(--orange);
+}
+
+/* Carrusel deslizable en móvil */
+@media (max-width: 768px) {
+  .trajectory-grid.explore-track {
+    display: flex;
+    gap: 14px;
+    margin-inline: calc(50% - 50vw);
+    padding: 6px calc(50vw - 50%) 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: calc(50vw - 50%);
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .trajectory-grid.explore-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trajectory-grid.explore-track .trajectory-card {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+  }
+
+  .trajectory-card:hover {
+    transform: none;
+  }
+
+  .trajectory-detail {
+    min-height: 0;
+    padding: 24px;
+    gap: 28px;
+  }
+}
+
+/* =========================================
+   ACERCA DE — FONDO VIVO
+   Capas de luz animadas solo con transform y
+   opacity, fusionadas en modo overlay: sobre
+   la silueta oscura del DJ no producen cambio,
+   por lo que solo se mueve el humo y el público.
+========================================= */
+
+.about-photo {
+  isolation: isolate;
+}
+
+.about-photo-fx {
+  position: absolute;
+  inset: -8% 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.75;
+  /* Protege el logo de la camiseta */
+  -webkit-mask-image: radial-gradient(ellipse 26% 16% at 50% 57%, transparent 65%, #000 100%);
+  mask-image: radial-gradient(ellipse 26% 16% at 50% 57%, transparent 65%, #000 100%);
+}
+
+.about-fx-haze,
+.about-fx-beam {
+  position: absolute;
+  will-change: transform, opacity;
+  animation-play-state: paused;
+}
+
+.about-fx-haze {
+  border-radius: 50%;
+}
+
+.about-fx-haze-a {
+  top: -6%;
+  left: -30%;
+  width: 95%;
+  height: 58%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 150, 70, 0.95) 0%,
+    rgba(255, 90, 31, 0.45) 38%,
+    transparent 70%
+  );
+  animation: aboutHazeA 15s ease-in-out infinite alternate;
+}
+
+.about-fx-haze-b {
+  top: 4%;
+  right: -32%;
+  width: 90%;
+  height: 54%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 120, 45, 0.9) 0%,
+    rgba(255, 75, 20, 0.4) 40%,
+    transparent 70%
+  );
+  animation: aboutHazeB 21s ease-in-out infinite alternate;
+}
+
+/* Barrido de luz sobre el público */
+.about-fx-beam {
+  top: 34%;
+  left: -50%;
+  width: 45%;
+  height: 34%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 185, 110, 0.75) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: aboutBeam 9s ease-in-out infinite;
+}
+
+.about-photo-fx.is-running .about-fx-haze,
+.about-photo-fx.is-running .about-fx-beam {
+  animation-play-state: running;
+}
+
+@keyframes aboutHazeA {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: translate3d(34%, 10%, 0) scale(1.3);
+    opacity: 1;
+  }
+}
+
+@keyframes aboutHazeB {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.15);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(-30%, -8%, 0) scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+@keyframes aboutBeam {
+  0% {
+    transform: translate3d(0, 0, 0) skewX(-14deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(360%, 0, 0) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+/* Profundidad al hacer scroll: animación nativa ligada a la vista
+   (sin JavaScript, en el compositor). Los navegadores sin soporte
+   conservan solo el movimiento ambiental. */
+@keyframes aboutFxParallax {
+  from {
+    translate: 0 -6%;
+  }
+  to {
+    translate: 0 6%;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .about-photo-fx {
+    animation: aboutFxParallax linear both;
+    animation-timeline: view();
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-item,
+  .trajectory-detail {
+    animation: none;
+  }
+
+  .about-photo-fx,
+  .about-fx-haze,
+  .about-fx-beam {
+    animation: none !important;
+  }
+
+  .about-fx-beam {
+    display: none;
+  }
+}
