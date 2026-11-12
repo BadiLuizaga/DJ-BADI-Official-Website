@@ -1,0 +1,374 @@
+/* =========================================
+   DJ BADI — BOOKING & CONTACT SECTION
+========================================= */
+
+.booking-section {
+  position: relative;
+  padding: 120px 3%;
+  border-top: 1px solid var(--border);
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 90, 31, 0.08),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 6, 0.85),
+      rgba(10, 10, 10, 0.95)
+    );
+}
+
+.booking-container {
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+/* -----------------------------------------
+   Left Column: Information
+----------------------------------------- */
+.booking-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  color: var(--orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.booking-kicker-line {
+  width: 35px;
+  height: 1px;
+  background: var(--orange);
+}
+
+.booking-info h2 {
+  margin: 0 0 20px 0;
+  font-size: clamp(55px, 7vw, 95px);
+  line-height: 0.88;
+  letter-spacing: -5px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.booking-info h2 span {
+  color: var(--orange);
+}
+
+.booking-subtitle {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 0 35px 0;
+}
+
+.booking-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.booking-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #dcd8d3;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.booking-highlight-item svg {
+  color: var(--orange);
+  flex-shrink: 0;
+}
+
+.booking-direct-card {
+  padding: 28px;
+  border: 1px solid var(--border);
+  background: rgba(14, 14, 14, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.booking-direct-card > span {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.booking-direct-card > p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 18px 0;
+  line-height: 1.6;
+}
+
+.booking-direct-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.booking-direct-btn svg:first-child {
+  color: #25d366;
+}
+
+.booking-direct-btn:hover {
+  border-color: var(--orange);
+  background: rgba(255, 90, 31, 0.1);
+  color: var(--orange);
+  transform: translateY(-2px);
+}
+
+/* -----------------------------------------
+   Right Column: Form Card
+----------------------------------------- */
+.booking-card {
+  padding: 40px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(255, 90, 31, 0.06),
+      transparent 40%
+    ),
+    rgba(14, 14, 14, 0.88);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+}
+
+.booking-card-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.booking-card-badge {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.booking-card-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.booking-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.booking-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.booking-field.full-width {
+  width: 100%;
+}
+
+.booking-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #c4bfba;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.booking-field label svg {
+  color: var(--orange);
+}
+
+.booking-field input,
+.booking-field select,
+.booking-field textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  background: rgba(8, 8, 8, 0.85);
+  color: #ffffff;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.25s ease;
+  color-scheme: dark;
+}
+
+.booking-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff5a1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+.booking-field select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+.booking-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+.booking-field input::placeholder,
+.booking-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.booking-field input:focus,
+.booking-field select:focus,
+.booking-field textarea:focus {
+  border-color: var(--orange);
+  background: rgba(18, 18, 18, 0.95);
+  box-shadow: 0 0 0 2px rgba(255, 90, 31, 0.18);
+}
+
+.booking-field input.input-error,
+.booking-field select.input-error {
+  border-color: #ff334b;
+  background: rgba(255, 51, 75, 0.05);
+}
+
+.error-text {
+  color: #ff4d64;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.booking-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 18px 24px;
+  border: 1px solid var(--orange);
+  border-radius: 2px;
+  background: var(--orange);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.booking-submit-btn:hover {
+  background: #ff743d;
+  border-color: #ff743d;
+  box-shadow: 0 10px 25px rgba(255, 90, 31, 0.35);
+  transform: translateY(-2px);
+}
+
+.booking-submit-btn:active {
+  transform: translateY(0);
+}
+
+.booking-disclaimer {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1024px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+
+  .booking-info h2 {
+    font-size: clamp(48px, 9vw, 80px);
+  }
+
+  .booking-card {
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .booking-section {
+    padding: 80px 3%;
+  }
+
+  .booking-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .booking-info h2 {
+    font-size: 44px;
+    letter-spacing: -3px;
+  }
+
+  .booking-card {
+    padding: 24px 18px;
+  }
+
+  .booking-submit-btn {
+    padding: 16px 18px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+}
+

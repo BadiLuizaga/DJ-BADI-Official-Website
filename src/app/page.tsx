@@ -5,7 +5,6 @@ import {
   ArrowDown,
   ArrowUpRight,
   Menu,
-  MessageCircle,
   X,
   Zap,
 } from "lucide-react";
@@ -13,9 +12,7 @@ import {
 import { artist } from "@/data/artist";
 import TrajectorySection from "@/components/TrajectorySection";
 import MusicSection from "@/components/MusicSection";
-
-const WHATSAPP_URL =
-  "https://wa.me/59172191333?text=Hola%20DJ%20BADI%2C%20quisiera%20consultar%20disponibilidad%20y%20precios%20para%20una%20presentaci%C3%B3n.";
+import BookingSection from "@/components/BookingSection";
 
 const eventExperiences = [
   {
@@ -241,24 +238,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACTO */}
-      <section className="contact-section" id="contact">
-        <span className="section-number">05 / CONTRATACIONES</span>
-        <h2>
-          CREEMOS
-          <br />
-          <span>UNA EXPERIENCIA.</span>
-        </h2>
-        <p>
-          Disponible para clubes, festivales, activaciones de marca y eventos
-          privados.
-        </p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-          <MessageCircle size={19} />
-          CONTRATACIONES POR WHATSAPP
-          <ArrowUpRight size={18} />
-        </a>
-      </section>
+      {/* BOOKING / CONTACTO */}
+      <BookingSection />
 
       {/* FOOTER */}
       <footer className="footer">
